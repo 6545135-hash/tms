@@ -1,0 +1,1193 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>TMS v4</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#fafaf8;--bg2:#f2f2ef;--bg3:#e8e8e4;--t:#1c1c1a;--t2:#6b6b67;--t3:#a8a8a2;--bd:rgba(0,0,0,0.09);--bd2:rgba(0,0,0,0.18);--ibg:#eef4fc;--it:#1a4a8a;--ibd:rgba(26,74,138,0.22);--obg:#eaf5ee;--ot:#1a6b3a;--obd:rgba(26,107,58,0.22);--wbg:#fdf3e3;--wt:#8a4a00;--wbd:rgba(138,74,0,0.22);--dbg:#fceaea;--dt:#8a1a1a;--dbd:rgba(138,26,26,0.22);--r:8px;--rl:12px;--f:'IBM Plex Sans',sans-serif;--m:'IBM Plex Mono',monospace}
+@media(prefers-color-scheme:dark){:root{--bg:#181816;--bg2:#222220;--bg3:#2c2c2a;--t:#f0f0ec;--t2:#8a8a84;--t3:#555550;--bd:rgba(255,255,255,0.07);--bd2:rgba(255,255,255,0.16);--ibg:#0d1f3a;--it:#7ab0f0;--ibd:rgba(122,176,240,0.18);--obg:#0d2a18;--ot:#6bcf8a;--obd:rgba(107,207,138,0.18);--wbg:#2a1800;--wt:#f0b060;--wbd:rgba(240,176,96,0.18);--dbg:#2a0808;--dt:#f08080;--dbd:rgba(240,128,128,0.18)}}
+body{font-family:var(--f);background:var(--bg3);color:var(--t);font-size:14px;line-height:1.5;min-height:100vh}
+.nav{display:flex;align-items:center;background:var(--bg);border-bottom:0.5px solid var(--bd2);padding:0 14px;height:44px;position:sticky;top:0;z-index:50;overflow-x:auto;gap:0}
+.nav::-webkit-scrollbar{display:none}
+.nlogo{font-family:var(--m);font-size:13px;font-weight:600;color:var(--t);margin-right:12px;white-space:nowrap;flex-shrink:0}
+.nlogo em{color:var(--t2);font-style:normal}
+.nl{font-size:11px;padding:0 8px;height:44px;display:flex;align-items:center;cursor:pointer;color:var(--t2);border-bottom:2px solid transparent;gap:3px;white-space:nowrap;transition:color .15s;flex-shrink:0}
+.nl:hover{color:var(--t)}.nl.active{color:var(--t);border-bottom-color:var(--t)}.nl i{font-size:13px}
+.nsp{flex:1;min-width:4px}
+.nbadge{font-size:9px;background:var(--dbg);color:var(--dt);border:0.5px solid var(--dbd);padding:2px 6px;border-radius:99px;font-family:var(--m)}
+.page{display:none;padding:12px;max-width:1180px;margin:0 auto}.page.active{display:block}
+.ph{display:flex;align-items:center;gap:8px;margin-bottom:12px;flex-wrap:wrap}
+.ph h2{font-size:15px;font-weight:600;font-family:var(--m);letter-spacing:-.02em}.sp{flex:1}
+.card{background:var(--bg);border:0.5px solid var(--bd2);border-radius:var(--rl);overflow:hidden}
+.slbl{font-size:10px;font-weight:600;color:var(--t3);text-transform:uppercase;letter-spacing:.1em;margin-bottom:5px}
+.badge{font-size:10px;padding:2px 6px;border-radius:99px;font-weight:500;white-space:nowrap;display:inline-flex;align-items:center;gap:2px;font-family:var(--m)}
+.bn{background:var(--ibg);color:var(--it);border:0.5px solid var(--ibd)}.bi{background:var(--obg);color:var(--ot);border:0.5px solid var(--obd)}
+.br_{background:var(--wbg);color:var(--wt);border:0.5px solid var(--wbd)}.bd_{background:var(--bg2);color:var(--t2);border:0.5px solid var(--bd)}
+.bu{background:var(--dbg);color:var(--dt);border:0.5px solid var(--dbd)}.bactive{background:var(--obg);color:var(--ot);border:0.5px solid var(--obd)}
+.bpause{background:var(--wbg);color:var(--wt);border:0.5px solid var(--wbd)}.boff{background:var(--bg2);color:var(--t2);border:0.5px solid var(--bd)}
+.btn{font-size:12px;padding:5px 12px;border:0.5px solid var(--bd2);border-radius:var(--r);background:var(--bg2);cursor:pointer;color:var(--t);font-weight:500;font-family:var(--f);transition:all .15s}
+.btn:hover{border-color:var(--t3)}.btn-primary{background:var(--t);color:var(--bg);border-color:var(--t)}.btn-primary:hover{opacity:.85}
+.btn-sm{font-size:11px;padding:3px 7px;border:0.5px solid var(--bd);border-radius:var(--r);background:transparent;cursor:pointer;color:var(--t2);font-family:var(--f);transition:all .15s}
+.btn-sm:hover{color:var(--t);border-color:var(--bd2)}.btn-danger{border-color:var(--dbd)!important;color:var(--dt)!important}.btn-danger:hover{background:var(--dbg)!important}
+input,select,textarea{font-size:12px;padding:5px 8px;border:0.5px solid var(--bd2);border-radius:var(--r);background:var(--bg2);color:var(--t);width:100%;font-family:var(--f)}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--t3)}
+label{font-size:11px;color:var(--t2);display:block;margin-bottom:3px}
+.fg{display:flex;flex-direction:column;gap:3px}.row2{display:grid;grid-template-columns:1fr 1fr;gap:8px}.row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+textarea{min-height:48px;resize:vertical}
+.filter-bar{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:10px;align-items:center}
+.chip{font-size:10px;padding:3px 8px;border:0.5px solid var(--bd);border-radius:99px;background:transparent;cursor:pointer;color:var(--t2);font-family:var(--m)}
+.chip.active{background:var(--bg2);color:var(--t);border-color:var(--bd2)}
+.sw{display:flex;align-items:center;gap:5px;border:0.5px solid var(--bd2);border-radius:var(--r);padding:0 7px;background:var(--bg2);max-width:180px}
+.sw input{border:none;background:transparent;padding:5px 0;font-size:11px}
+.sopts{display:flex;gap:4px;flex-wrap:wrap}
+.sopt{font-size:11px;padding:3px 8px;border-radius:99px;border:0.5px solid var(--bd);cursor:pointer;color:var(--t2);background:transparent}
+.sopt.ok{background:var(--obg);color:var(--ot);border-color:var(--obd)}.sopt.warn{background:var(--wbg);color:var(--wt);border-color:var(--wbd)}
+.sopt.info{background:var(--ibg);color:var(--it);border-color:var(--ibd)}.sopt.danger{background:var(--dbg);color:var(--dt);border-color:var(--dbd)}
+.tags{display:flex;flex-wrap:wrap;gap:3px}
+.tag{font-size:10px;padding:2px 7px;border-radius:99px;border:0.5px solid var(--bd);cursor:pointer;color:var(--t2)}
+.tag.active{background:var(--ibg);color:var(--it);border-color:var(--ibd)}
+.dayrow{display:flex;gap:3px;flex-wrap:wrap}
+.daybtn{width:28px;height:28px;border-radius:50%;border:0.5px solid var(--bd);background:transparent;cursor:pointer;font-size:9px;color:var(--t2);font-weight:600;font-family:var(--m)}
+.daybtn.active{background:var(--ibg);color:var(--it);border-color:var(--ibd)}
+.av{border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:600;flex-shrink:0;font-family:var(--m)}
+.av-s{width:24px;height:24px;font-size:9px}.av-m{width:34px;height:34px;font-size:11px}.av-l{width:46px;height:46px;font-size:14px}
+.lb{border-radius:2px;background:var(--bg3);overflow:hidden}.lbf{border-radius:2px;transition:width .3s}
+.rfield{display:flex;align-items:center;border:0.5px solid var(--bd2);border-radius:var(--r);background:var(--bg);overflow:hidden}
+.rsym{font-size:10px;padding:0 6px;color:var(--t2);background:var(--bg2);border-right:0.5px solid var(--bd);height:27px;display:flex;align-items:center;min-width:26px;justify-content:center;font-family:var(--m)}
+.rfield input{border:none;background:transparent;padding:4px 7px;font-size:11px;color:var(--t);width:100%;outline:none;font-family:var(--m)}
+.lpr{display:flex;align-items:center;gap:4px;margin-bottom:4px;background:var(--bg2);border-radius:var(--r);padding:5px 6px}
+.lpr select{flex:1;font-size:10px;padding:2px 4px;background:var(--bg)}
+.fsec{padding:12px 15px;border-bottom:0.5px solid var(--bd)}.fsec:last-of-type{border-bottom:none}
+/* DASHBOARD */
+.dash-total{background:var(--bg2);border-radius:var(--rl);padding:10px 12px;margin-bottom:12px;display:flex;gap:16px;flex-wrap:wrap}
+.dt-val{font-size:17px;font-weight:600;font-family:var(--m)}.dt-lbl{font-size:9px;color:var(--t3)}
+.dash-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:8px;margin-bottom:14px}
+.dash-card{background:var(--bg);border:0.5px solid var(--bd2);border-radius:var(--rl);padding:12px;cursor:pointer;transition:border-color .15s}
+.dash-card:hover{border-color:var(--t3)}
+.dash-stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px;margin-top:8px}
+.dash-stat{background:var(--bg2);border-radius:var(--r);padding:5px 7px}
+.dash-stat-val{font-size:13px;font-weight:600;font-family:var(--m)}.dash-stat-lbl{font-size:9px;color:var(--t3);margin-top:1px}
+/* ORDER CARDS */
+.ocard{background:var(--bg);border:0.5px solid var(--bd2);border-radius:var(--rl);overflow:hidden;transition:border-color .15s}
+.ocard-hdr{padding:10px 12px;cursor:pointer;display:flex;align-items:flex-start;gap:8px}
+.ocard-hdr:hover{background:rgba(0,0,0,.015)}
+.ocard-profit{border-radius:var(--r);padding:7px 10px;text-align:center;flex-shrink:0;min-width:66px;background:var(--obg)}
+.ocard-profit.warn{background:var(--wbg)}.ocard-profit.bad{background:var(--dbg)}
+.ocard-pval{font-size:15px;font-weight:700;font-family:var(--m);color:var(--ot);line-height:1}
+.ocard-profit.warn .ocard-pval{color:var(--wt)}.ocard-profit.bad .ocard-pval{color:var(--dt)}
+.ocard-plbl{font-size:9px;color:var(--ot);margin-top:2px}
+.ocard-profit.warn .ocard-plbl{color:var(--wt)}.ocard-profit.bad .ocard-plbl{color:var(--dt)}
+.ocard-body{flex:1;min-width:0}
+.opills{display:flex;gap:3px;flex-wrap:wrap;margin-top:4px;align-items:center}
+.pill{font-size:10px;background:var(--bg2);padding:2px 5px;border-radius:99px;color:var(--t2);border:0.5px solid var(--bd)}
+.ocard-exp{display:none;padding:0 12px 11px;border-top:0.5px solid var(--bd)}
+.ocard.open .ocard-exp{display:block}
+.exec-list{display:flex;flex-direction:column;gap:4px;margin-top:6px}
+.exec-item{background:var(--bg2);border-radius:var(--r);padding:6px 8px;display:flex;align-items:center;gap:7px}
+.exec-item-main{flex:1;min-width:0}
+.exec-doc{font-size:10px;color:var(--t2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.exec-rate{font-size:10px;font-family:var(--m);color:var(--ot);font-weight:600;white-space:nowrap}
+/* WORKLOAD */
+.wl-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px}
+.wlcard{background:var(--bg);border:0.5px solid var(--bd2);border-radius:var(--rl);padding:11px}
+/* DIR */
+.dir-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(175px,1fr));gap:8px}
+.dcard{background:var(--bg);border:0.5px solid var(--bd2);border-radius:var(--rl);padding:11px;cursor:pointer;transition:border-color .15s}
+.dcard:hover{border-color:var(--t3)}
+.langpill{font-size:9px;padding:1px 5px;border-radius:99px;background:var(--bg2);color:var(--t2);border:0.5px solid var(--bd)}
+.spectag{font-size:9px;padding:1px 5px;border-radius:99px;background:var(--ibg);color:var(--it);border:0.5px solid var(--ibd)}
+/* TABLE */
+.ltbl{width:100%;border-collapse:collapse}
+.ltbl th{font-size:10px;font-weight:600;color:var(--t3);text-transform:uppercase;letter-spacing:.06em;padding:6px 11px;text-align:left;background:var(--bg2);border-bottom:0.5px solid var(--bd2)}
+.ltbl td{font-size:11px;padding:7px 11px;border-bottom:0.5px solid var(--bd);vertical-align:middle}
+.ltbl tr:hover td{background:var(--bg2);cursor:pointer}
+/* DRAWER */
+.drbd{display:none;position:fixed;inset:0;background:rgba(0,0,0,.2);z-index:200}
+.dr{position:fixed;top:0;right:0;bottom:0;width:300px;background:var(--bg);border-left:0.5px solid var(--bd2);z-index:201;display:flex;flex-direction:column;overflow-y:auto}
+.drhead{padding:11px 13px;border-bottom:0.5px solid var(--bd);display:flex;align-items:center;gap:7px;position:sticky;top:0;background:var(--bg)}
+.drcls{margin-left:auto;background:transparent;border:none;cursor:pointer;color:var(--t2);font-size:16px}
+.drbody{padding:12px;flex:1}
+.drsec{margin-bottom:12px}
+.drrow{display:flex;justify-content:space-between;font-size:11px;padding:2px 0;gap:6px}
+.drrow span:first-child{color:var(--t2);flex-shrink:0}
+.drrow span:last-child{font-weight:500;text-align:right;font-family:var(--m);font-size:10px}
+.drfoot{padding:9px 12px;border-top:0.5px solid var(--bd);display:flex;gap:5px;position:sticky;bottom:0;background:var(--bg)}
+/* SERVICES */
+.svc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(195px,1fr));gap:8px}
+.svccard{background:var(--bg);border:0.5px solid var(--bd2);border-radius:var(--rl);padding:11px;position:relative}
+.svcico{width:30px;height:30px;border-radius:var(--r);display:flex;align-items:center;justify-content:center;font-size:15px;margin-bottom:7px}
+/* BRANCHES */
+.br-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:8px}
+.brcard{background:var(--bg);border:0.5px solid var(--bd2);border-radius:var(--rl);padding:12px;position:relative;cursor:pointer;transition:border-color .15s}
+.brcard:hover{border-color:var(--t3)}
+/* CLIENTS */
+.cl-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:8px}
+.clcard{background:var(--bg);border:0.5px solid var(--bd2);border-radius:var(--rl);padding:11px;cursor:pointer;transition:border-color .15s}
+.clcard:hover{border-color:var(--t3)}
+/* MANAGERS */
+.mg-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:8px}
+.mgcard{background:var(--bg);border:0.5px solid var(--bd2);border-radius:var(--rl);padding:11px;cursor:pointer;transition:border-color .15s}
+.mgcard:hover{border-color:var(--t3)}
+/* MODAL */
+.mobd{display:none;position:fixed;inset:0;background:rgba(0,0,0,.3);z-index:300;overflow-y:auto;padding:24px 0}
+.mo{background:var(--bg);border:0.5px solid var(--bd2);border-radius:var(--rl);width:100%;max-width:520px;margin:0 auto;box-shadow:0 4px 20px rgba(0,0,0,.1)}
+.mohead{padding:11px 15px;border-bottom:0.5px solid var(--bd);display:flex;align-items:center;justify-content:space-between}
+.mohead h3{font-size:13px;font-weight:600;font-family:var(--m)}
+.mobody{padding:13px;display:flex;flex-direction:column;gap:9px;max-height:68vh;overflow-y:auto}
+.mofoot{padding:9px 13px;border-top:0.5px solid var(--bd);display:flex;gap:5px;align-items:center}
+/* AC */
+.ac-wrap{position:relative}
+.ac-list{position:absolute;top:calc(100% + 2px);left:0;right:0;background:var(--bg);border:0.5px solid var(--bd2);border-radius:var(--r);z-index:100;max-height:130px;overflow-y:auto;display:none;box-shadow:0 3px 10px rgba(0,0,0,.1)}
+.ac-item{padding:5px 8px;font-size:11px;cursor:pointer}.ac-item:hover{background:var(--bg2)}
+/* RATING */
+.rcrit{display:flex;align-items:center;justify-content:space-between;padding:5px 0;border-bottom:0.5px solid var(--bd)}.rcrit:last-child{border-bottom:none}
+.rcstars{display:flex;gap:2px}.rcstar{font-size:14px;cursor:pointer;color:var(--bg3);user-select:none}.rcstar.on{color:#d4a017}
+.savemsg{font-size:11px;color:var(--ot);display:none;font-family:var(--m);margin-left:auto}
+.vbtns{display:flex;gap:2px}
+.vbtn{padding:3px 6px;border:0.5px solid var(--bd);border-radius:var(--r);background:transparent;cursor:pointer;color:var(--t2);font-size:13px;line-height:1}
+.vbtn.active{background:var(--bg2);color:var(--t);border-color:var(--bd2)}
+/* CONFIRM */
+.conf-bd{display:none;position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:400;align-items:center;justify-content:center}
+.conf-box{background:var(--bg);border:0.5px solid var(--bd2);border-radius:var(--rl);padding:18px;max-width:300px;margin:0 14px;text-align:center}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <span class="nlogo">TMS<em>.</em>pro</span>
+  <a class="nl active" onclick="showPage('dashboard')"><i class="ti ti-dashboard"></i>Главная</a>
+  <a class="nl" onclick="showPage('orders')"><i class="ti ti-files"></i>Заказы</a>
+  <a class="nl" onclick="showPage('clients')"><i class="ti ti-address-book"></i>Клиенты</a>
+  <a class="nl" onclick="showPage('workload')"><i class="ti ti-chart-bar"></i>Нагрузка</a>
+  <a class="nl" onclick="showPage('directory')"><i class="ti ti-users"></i>Исполнители</a>
+  <a class="nl" onclick="showPage('managers')"><i class="ti ti-user-check"></i>Менеджеры</a>
+  <a class="nl" onclick="showPage('services')"><i class="ti ti-list-details"></i>Услуги</a>
+  <a class="nl" onclick="showPage('branches')"><i class="ti ti-building"></i>Филиалы</a>
+  <div class="nsp"></div>
+  <span class="nbadge" id="ubadge" style="display:none"></span>
+</nav>
+<div class="page active" id="page-dashboard">
+  <div class="ph"><h2>Главная</h2><button class="btn btn-primary" onclick="showPage('orders');setTimeout(()=>openMo('mo-order'),50)"><i class="ti ti-plus" style="font-size:10px;vertical-align:-1px;margin-right:3px"></i>Новый заказ</button></div>
+  <div class="dash-total" id="dash-total"></div>
+  <div class="dash-grid" id="dash-grid"></div>
+  <div class="ph" style="margin-top:4px;margin-bottom:8px"><h2 style="font-size:13px">Активные заказы</h2></div>
+  <div style="display:flex;flex-direction:column;gap:5px" id="dash-orders"></div>
+</div>
+<div class="page" id="page-orders">
+  <div class="ph"><h2>Заказы</h2><button class="btn btn-primary" onclick="openMo('mo-order')"><i class="ti ti-plus" style="font-size:10px;vertical-align:-1px;margin-right:3px"></i>Новый заказ</button></div>
+  <div class="filter-bar">
+    <button class="chip active" onclick="setOF('all',this)">Все</button>
+    <button class="chip" onclick="setOF('new',this)">Новые</button>
+    <button class="chip" onclick="setOF('unassigned',this)">Без исп.</button>
+    <button class="chip" onclick="setOF('inprogress',this)">В работе</button>
+    <button class="chip" onclick="setOF('review',this)">На проверке</button>
+    <button class="chip" onclick="setOF('done',this)">Готово</button>
+    <div class="sp"></div>
+    <select id="o-br-f" style="width:auto;font-size:10px;padding:2px 6px" onchange="renderOrders()"><option value="">Все филиалы</option></select>
+    <span style="font-size:10px;color:var(--t2);font-family:var(--m)" id="ocount"></span>
+    <div class="vbtns"><button class="vbtn active" id="obg" onclick="setOV('cards')"><i class="ti ti-layout-cards"></i></button><button class="vbtn" id="obl" onclick="setOV('table')"><i class="ti ti-list"></i></button></div>
+  </div>
+  <div id="orders-list"></div>
+</div>
+<div class="page" id="page-clients">
+  <div class="ph"><h2>Клиенты</h2>
+    <div class="sw"><i class="ti ti-search" style="font-size:11px;color:var(--t2)"></i><input id="cl-search" placeholder="Поиск..." oninput="renderClients()"></div>
+    <button class="btn btn-primary" onclick="openClMo(null)"><i class="ti ti-plus" style="font-size:10px;vertical-align:-1px;margin-right:3px"></i>Добавить</button>
+  </div>
+  <div class="filter-bar">
+    <button class="chip active" onclick="setCF('all',this)">Все</button>
+    <button class="chip" onclick="setCF('phys',this)">Физ. лица</button>
+    <button class="chip" onclick="setCF('legal',this)">Юр. лица</button>
+    <div class="sp"></div>
+    <select id="cl-br-f" style="width:auto;font-size:10px;padding:2px 6px" onchange="renderClients()"><option value="">Все филиалы</option></select>
+    <span style="font-size:10px;color:var(--t2);font-family:var(--m)" id="clcount"></span>
+    <div class="vbtns"><button class="vbtn active" id="clbg" onclick="setCLV('grid')"><i class="ti ti-layout-grid"></i></button><button class="vbtn" id="clbl" onclick="setCLV('table')"><i class="ti ti-list"></i></button></div>
+  </div>
+  <div id="cl-view"></div>
+</div>
+<div class="page" id="page-workload"><div class="ph"><h2>Загруженность</h2></div><div class="wl-grid" id="wl-grid"></div></div>
+<div class="page" id="page-directory">
+  <div class="ph"><h2>Исполнители</h2>
+    <div class="sw"><i class="ti ti-search" style="font-size:11px;color:var(--t2)"></i><input id="dir-search" placeholder="Поиск..." oninput="renderDir()"></div>
+    <button class="btn btn-primary" onclick="openTrMo(null)"><i class="ti ti-plus" style="font-size:10px;vertical-align:-1px;margin-right:3px"></i>Добавить</button>
+  </div>
+  <div class="filter-bar">
+    <button class="chip active" onclick="setDF('all',this)">Все</button>
+    <button class="chip" onclick="setDF('active',this)">Активные</button>
+    <button class="chip" onclick="setDF('freelance',this)">Фриланс</button>
+    <button class="chip" onclick="setDF('staff',this)">Штатные</button>
+    <div class="sp"></div>
+    <span style="font-size:10px;color:var(--t2);font-family:var(--m)" id="dcount"></span>
+    <div class="vbtns"><button class="vbtn active" id="dbg" onclick="setDV('grid')"><i class="ti ti-layout-grid"></i></button><button class="vbtn" id="dbl" onclick="setDV('table')"><i class="ti ti-list"></i></button></div>
+  </div>
+  <div id="dir-view"></div>
+</div>
+<div class="page" id="page-managers">
+  <div class="ph"><h2>Менеджеры проектов</h2><button class="btn btn-primary" onclick="openMgMo(null)"><i class="ti ti-plus" style="font-size:10px;vertical-align:-1px;margin-right:3px"></i>Добавить</button></div>
+  <div class="filter-bar"><div class="sp"></div><div class="vbtns"><button class="vbtn active" id="mgbg" onclick="setMGV('grid')"><i class="ti ti-layout-grid"></i></button><button class="vbtn" id="mgbl" onclick="setMGV('table')"><i class="ti ti-list"></i></button></div></div>
+  <div id="mg-view"></div>
+</div>
+<div class="page" id="page-services">
+  <div class="ph"><h2>Услуги</h2><button class="btn btn-primary" onclick="openSvcMo(null)"><i class="ti ti-plus" style="font-size:10px;vertical-align:-1px;margin-right:3px"></i>Добавить</button></div>
+  <div class="svc-grid" id="svc-grid"></div>
+</div>
+<div class="page" id="page-branches">
+  <div class="ph"><h2>Филиалы</h2><button class="btn btn-primary" onclick="openBrMo(null)"><i class="ti ti-plus" style="font-size:10px;vertical-align:-1px;margin-right:3px"></i>Добавить</button></div>
+  <div class="br-grid" id="br-grid"></div>
+</div>
+<!-- DRAWER -->
+<div class="drbd" id="drbd" onclick="closeDr()">
+  <div class="dr" onclick="event.stopPropagation()">
+    <div class="drhead"><div class="av av-m" id="drav"></div><div><div style="font-size:12px;font-weight:600;font-family:var(--m)" id="drname"></div><div style="font-size:10px;color:var(--t2)" id="drtype"></div></div><button class="drcls" onclick="closeDr()"><i class="ti ti-x"></i></button></div>
+    <div class="drbody" id="drbody"></div>
+    <div class="drfoot" id="drfoot"></div>
+  </div>
+</div>
+<!-- CONFIRM -->
+<div class="conf-bd" id="conf-bd">
+  <div class="conf-box">
+    <div style="font-size:20px;margin-bottom:8px">🗑️</div>
+    <div style="font-size:13px;font-weight:500;margin-bottom:5px" id="conf-title">Удалить?</div>
+    <div style="font-size:11px;color:var(--t2);margin-bottom:14px">Это действие нельзя отменить</div>
+    <div style="display:flex;gap:7px;justify-content:center">
+      <button class="btn btn-danger" id="conf-ok">Удалить</button>
+      <button class="btn-sm" onclick="closeConf()">Отмена</button>
+    </div>
+  </div>
+</div>
+<!-- ORDER MODAL -->
+<div class="mobd" id="mo-order" onclick="if(event.target===this)closeMo('mo-order')"><div class="mo">
+  <div class="mohead"><h3 id="mo-order-ttl">Новый заказ</h3><button class="btn-sm" onclick="closeMo('mo-order')"><i class="ti ti-x"></i></button></div>
+  <div class="mobody">
+    <div class="row2"><div class="fg"><label>Филиал</label><select id="no-branch" onchange="onNoBranch()"></select></div><div class="fg"><label>Менеджер</label><select id="no-manager"></select></div></div>
+    <div class="fg ac-wrap"><label>Клиент</label><input id="no-client" placeholder="Введите имя..." oninput="acClient(this.value)" autocomplete="off"><div class="ac-list" id="ac-client"></div></div>
+    <div class="fg"><label>Контакт</label><input id="no-contact" placeholder="Телефон / email"></div>
+    <div class="row2"><div class="fg"><label>Услуга</label><select id="no-svc" onchange="onNoSvc()"></select></div><div class="fg"><label>Языковая пара</label><select id="no-pair"></select></div></div>
+    <div class="row3">
+      <div class="fg"><label>Количество</label><input type="number" id="no-qty" placeholder="300" oninput="calcNoPrice()"></div>
+      <div class="fg"><label>Цена клиента</label><div class="rfield"><span class="rsym" id="no-csym">€</span><input type="number" id="no-price" placeholder="0.00" step="0.01" oninput="calcNoMargin()"></div></div>
+      <div class="fg"><label>Срок</label><input type="date" id="no-deadline"></div>
+    </div>
+    <div class="row2"><div class="fg"><label>Срочность</label><select id="no-urgency"><option>Обычный</option><option>Срочный (24ч)</option><option>Экспресс (4ч)</option></select></div><div class="fg"><label>Комментарий</label><input id="no-comment"></div></div>
+    <div id="no-margin-wrap"></div>
+  </div>
+  <div class="mofoot"><button class="btn btn-primary" onclick="saveOrder()">Сохранить</button><button class="btn-sm" onclick="closeMo('mo-order')">Отмена</button></div>
+</div></div>
+<!-- EXEC MODAL -->
+<div class="mobd" id="mo-exec" onclick="if(event.target===this)closeMo('mo-exec')"><div class="mo">
+  <div class="mohead"><h3>Добавить исполнителя</h3><button class="btn-sm" onclick="closeMo('mo-exec')"><i class="ti ti-x"></i></button></div>
+  <div class="mobody">
+    <div class="fg"><label>Исполнитель</label><select id="exec-tr" onchange="onExecTrChange()"></select></div>
+    <div class="fg"><label>Документ / задача</label><input id="exec-doc" placeholder="Диплом, паспорт, договор..."></div>
+    <div class="row3">
+      <div class="fg"><label>Ставка</label><div class="rfield"><span class="rsym" id="exec-sym">€</span><input type="number" id="exec-rate" step="0.001" oninput="calcExecCost()"></div></div>
+      <div class="fg"><label>Единиц</label><input type="number" id="exec-qty" oninput="calcExecCost()"></div>
+      <div class="fg"><label>Стоимость</label><div class="rfield"><span class="rsym" id="exec-csym">€</span><input type="number" id="exec-cost" step="0.01"></div></div>
+    </div>
+  </div>
+  <div class="mofoot"><button class="btn btn-primary" onclick="saveExec()">Добавить</button><button class="btn-sm" onclick="closeMo('mo-exec')">Отмена</button></div>
+</div></div>
+<!-- RATE MODAL -->
+<div class="mobd" id="mo-rate" onclick="if(event.target===this)closeMo('mo-rate')"><div class="mo">
+  <div class="mohead"><h3>Оценить исполнителя</h3><button class="btn-sm" onclick="closeMo('mo-rate')"><i class="ti ti-x"></i></button></div>
+  <div class="mobody"><div id="mo-rate-info" style="font-size:11px;color:var(--t2)"></div><div id="mo-rate-crits"></div><div class="fg"><label>Комментарий</label><textarea id="mo-rate-comment"></textarea></div></div>
+  <div class="mofoot"><button class="btn btn-primary" onclick="submitRating()">Сохранить</button><button class="btn-sm" onclick="closeMo('mo-rate')">Отмена</button></div>
+</div></div>
+<!-- SERVICE MODAL -->
+<div class="mobd" id="mo-svc" onclick="if(event.target===this)closeMo('mo-svc')"><div class="mo">
+  <div class="mohead"><h3 id="mo-svc-ttl">Новая услуга</h3><button class="btn-sm" onclick="closeMo('mo-svc')"><i class="ti ti-x"></i></button></div>
+  <div class="mobody">
+    <div class="row2"><div class="fg"><label>Название</label><input id="sv-name"></div><div class="fg"><label>Категория</label><select id="sv-cat" onchange="onSvCat()"><option>Перевод</option><option>Присяжный перевод</option><option>Нотариальное заверение</option><option>Апостиль</option><option>Доставка</option><option>Легализация</option><option>Редактура</option><option>Прочее</option></select></div></div>
+    <div class="row3"><div class="fg"><label>Цена</label><input type="number" id="sv-price" step="0.001"></div><div class="fg"><label>Валюта</label><select id="sv-cur"></select></div><div class="fg"><label>Единица</label><select id="sv-unit"><option>слово</option><option>страница</option><option>символ</option><option>единица</option><option>час</option><option>фикс.</option></select></div></div>
+    <div id="sv-pairs-wrap" style="display:none"><div class="slbl">Языковые пары</div><div id="sv-pairs"></div><button class="btn-sm" style="margin-top:3px" onclick="addSvPair()"><i class="ti ti-plus" style="font-size:10px;vertical-align:-1px;margin-right:2px"></i>Добавить пару</button></div>
+    <div class="fg"><label>Описание</label><textarea id="sv-desc" style="min-height:38px"></textarea></div>
+  </div>
+  <div class="mofoot"><button class="btn btn-primary" onclick="saveSvc()">Сохранить</button><button class="btn-sm" onclick="closeMo('mo-svc')">Отмена</button></div>
+</div></div>
+<!-- BRANCH MODAL -->
+<div class="mobd" id="mo-branch" onclick="if(event.target===this)closeMo('mo-branch')"><div class="mo">
+  <div class="mohead"><h3 id="mo-br-ttl">Новый филиал</h3><button class="btn-sm" onclick="closeMo('mo-branch')"><i class="ti ti-x"></i></button></div>
+  <div class="mobody">
+    <div class="row2"><div class="fg"><label>Название</label><input id="br-name"></div><div class="fg"><label>Код (3–4 буквы)</label><input id="br-code" maxlength="4" style="font-family:var(--m);text-transform:uppercase"></div></div>
+    <div class="fg"><label>Юридическое лицо</label><input id="br-entity"></div>
+    <div class="row2"><div class="fg"><label>Страна</label><select id="br-country"><option value="ES">🇪🇸 Испания</option><option value="BY">🇧🇾 Беларусь</option><option value="EE">🇪🇪 Эстония</option><option value="GB">🇬🇧 Великобритания</option><option value="HK">🇭🇰 Гонконг</option><option value="PL">🇵🇱 Польша</option><option value="OTHER">🌐 Другое</option></select></div><div class="fg"><label>Валюта</label><select id="br-cur"></select></div></div>
+    <div class="row2"><div class="fg"><label>Накладные (%)</label><input type="number" id="br-overhead" placeholder="20"></div><div class="fg"><label>Email</label><input type="email" id="br-email"></div></div>
+    <div class="fg"><label>Телефон / сайт</label><input id="br-phone"></div>
+    <div class="fg"><label>Заметки</label><textarea id="br-notes" style="min-height:38px"></textarea></div>
+  </div>
+  <div class="mofoot"><button class="btn btn-primary" onclick="saveBranch()">Сохранить</button><button class="btn-sm" onclick="closeMo('mo-branch')">Отмена</button></div>
+</div></div>
+<!-- CLIENT MODAL -->
+<div class="mobd" id="mo-client" onclick="if(event.target===this)closeMo('mo-client')"><div class="mo">
+  <div class="mohead"><h3 id="mo-cl-ttl">Новый клиент</h3><button class="btn-sm" onclick="closeMo('mo-client')"><i class="ti ti-x"></i></button></div>
+  <div class="mobody">
+    <div class="fg"><label>Тип</label><div class="sopts" id="cl-type-opts"><div class="sopt info" onclick="setClType(this,'phys')">Физ. лицо</div><div class="sopt" onclick="setClType(this,'legal')">Юр. лицо</div></div></div>
+    <div class="row2"><div class="fg"><label>Имя / Название</label><input id="cl-name"></div><div class="fg"><label>Филиал</label><select id="cl-branch"></select></div></div>
+    <div class="row2"><div class="fg"><label>Телефон</label><input id="cl-phone"></div><div class="fg"><label>Email</label><input type="email" id="cl-email"></div></div>
+    <div class="row2"><div class="fg"><label>Страна</label><input id="cl-country"></div><div class="fg"><label>Язык общения</label><select id="cl-lang"><option>Русский</option><option>Английский</option><option>Испанский</option><option>Эстонский</option><option>Польский</option></select></div></div>
+    <div class="fg"><label>Комментарий</label><textarea id="cl-notes" style="min-height:38px"></textarea></div>
+  </div>
+  <div class="mofoot"><button class="btn btn-primary" onclick="saveClient()">Сохранить</button><button class="btn-sm" onclick="closeMo('mo-client')">Отмена</button></div>
+</div></div>
+<!-- TRANSLATOR MODAL -->
+<div class="mobd" id="mo-tr" onclick="if(event.target===this)closeMo('mo-tr')"><div class="mo" style="max-width:560px">
+  <div class="mohead"><h3 id="mo-tr-ttl">Новый исполнитель</h3><button class="btn-sm" onclick="closeMo('mo-tr')"><i class="ti ti-x"></i></button></div>
+  <div class="mobody">
+    <div style="display:flex;align-items:center;gap:9px">
+      <div style="display:flex;flex-direction:column;align-items:center;gap:3px"><div class="av av-l" id="tr-av" style="background:var(--ibg);color:var(--it)">?</div><span style="font-size:9px;color:var(--t3)">фото позже</span></div>
+      <div style="flex:1;display:grid;grid-template-columns:1fr 1fr;gap:7px">
+        <div class="fg"><label>Имя</label><input id="tr-name" oninput="updTrAv()"></div>
+        <div class="fg"><label>Фамилия</label><input id="tr-surname" oninput="updTrAv()"></div>
+        <div class="fg"><label>Email</label><input type="email" id="tr-email"></div>
+        <div class="fg"><label>Телефон</label><input id="tr-phone"></div>
+      </div>
+    </div>
+    <div><div class="slbl">Языковые пары и ставки</div><div id="tr-pairs"></div><button class="btn-sm" onclick="addTrPair()"><i class="ti ti-plus" style="font-size:10px;vertical-align:-1px;margin-right:2px"></i>Добавить пару</button></div>
+    <div><div class="slbl">Специализация</div><div class="tags" id="tr-specs"></div></div>
+    <div class="row2"><div><div class="slbl">Тип</div><div class="sopts" id="tr-type-opts"></div></div><div><div class="slbl">Статус</div><div class="sopts" id="tr-status-opts"></div></div></div>
+    <div><div class="slbl">Рабочие дни</div><div class="dayrow" id="tr-days"></div></div>
+    <div class="row2">
+      <div><div class="slbl">Макс. заказов</div><div style="display:flex;align-items:center;gap:6px;margin-top:3px"><input type="range" id="tr-cap" min="1" max="15" value="4" step="1" style="flex:1" oninput="document.getElementById('tr-capv').textContent=this.value"><span style="font-size:13px;font-weight:600;font-family:var(--m);min-width:16px" id="tr-capv">4</span></div></div>
+      <div class="fg"><div class="slbl">Основная валюта</div><select id="tr-cur"></select></div>
+    </div>
+    <div class="fg"><label>Заметки</label><textarea id="tr-notes"></textarea></div>
+  </div>
+  <div class="mofoot"><button class="btn btn-primary" onclick="saveTr()">Сохранить</button><button class="btn-sm" onclick="closeMo('mo-tr')">Отмена</button><span class="savemsg" id="tr-savemsg">Сохранено!</span></div>
+</div></div>
+<!-- MANAGER MODAL -->
+<div class="mobd" id="mo-manager" onclick="if(event.target===this)closeMo('mo-manager')"><div class="mo">
+  <div class="mohead"><h3 id="mo-mg-ttl">Новый менеджер</h3><button class="btn-sm" onclick="closeMo('mo-manager')"><i class="ti ti-x"></i></button></div>
+  <div class="mobody">
+    <div class="row2"><div class="fg"><label>Имя</label><input id="mg-name"></div><div class="fg"><label>Фамилия</label><input id="mg-surname"></div></div>
+    <div class="row2"><div class="fg"><label>Телефон</label><input id="mg-phone"></div><div class="fg"><label>Email</label><input type="email" id="mg-email"></div></div>
+    <div class="row2"><div class="fg"><label>Филиал</label><select id="mg-branch"></select></div><div class="fg"><label>Должность</label><input id="mg-role" placeholder="Менеджер"></div></div>
+    <div class="fg"><label>Заметки</label><textarea id="mg-notes" style="min-height:38px"></textarea></div>
+  </div>
+  <div class="mofoot"><button class="btn btn-primary" onclick="saveMg()">Сохранить</button><button class="btn-sm" onclick="closeMo('mo-manager')">Отмена</button><span class="savemsg" id="mg-savemsg">Сохранено!</span></div>
+</div></div>
+<script>
+const LANGS=['Русский','Английский','Испанский','Эстонский','Польский','Китайский','Немецкий','Французский','Украинский','Арабский','Японский','Итальянский'];
+const SPECS=['Юридический','Медицинский','Технический','Финансовый','Личные документы','Академический','Маркетинг','IT/ПО','Нотариальный','Присяжный'];
+const DAYS=[{k:'mo',l:'Пн'},{k:'tu',l:'Вт'},{k:'we',l:'Ср'},{k:'th',l:'Чт'},{k:'fr',l:'Пт'},{k:'sa',l:'Сб'},{k:'su',l:'Вс'}];
+const CURRS=[{c:'EUR',s:'€',r:1},{c:'USD',s:'$',r:0.92},{c:'GBP',s:'£',r:1.17},{c:'BYN',s:'Br',r:0.29},{c:'RUB',s:'₽',r:0.0097},{c:'PLN',s:'zł',r:0.23},{c:'HKD',s:'HK$',r:0.118},{c:'CHF',s:'CHF',r:1.03}];
+const PAL=[['#eef4fc','#1a4a8a'],['#eaf5ee','#1a6b3a'],['#f5eef8','#6a1a8a'],['#fdf3e3','#8a4a00'],['#fceaea','#8a1a1a'],['#eaf5f5','#1a6b6b'],['#f8f0ea','#8a4a1a']];
+const FLAGS={ES:'🇪🇸',BY:'🇧🇾',EE:'🇪🇪',GB:'🇬🇧',HK:'🇭🇰',PL:'🇵🇱',OTHER:'🌐'};
+const SVC_ICO={'Перевод':'ti-language','Присяжный перевод':'ti-certificate-2','Нотариальное заверение':'ti-certificate','Апостиль':'ti-stamp','Доставка':'ti-truck','Легализация':'ti-building-bank','Редактура':'ti-edit','Прочее':'ti-puzzle'};
+const PAIR_CATS=['Перевод','Присяжный перевод','Редактура'];
+
+let branches=[
+  {id:'b1',name:'Perevedi.by',code:'PVD',entity:'ИП Перевед',country:'BY',currency:'BYN',overhead:22,email:'info@perevedi.by',phone:'',notes:'Минск'},
+  {id:'b2',name:'ATCG Tallinn',code:'EE',entity:'ATCG Tõlkebüroo OÜ',country:'EE',currency:'EUR',overhead:18,email:'info@atcg.ee',phone:'',notes:'Таллин'},
+  {id:'b3',name:'Los Jurados BCN',code:'BCN',entity:'Team Crew Logistics S.L.',country:'ES',currency:'EUR',overhead:20,email:'info@losjurados.es',phone:'+34 600 000 000',notes:'Барселона'},
+  {id:'b4',name:'Los Jurados UK',code:'UK',entity:'Los Jurados UK Ltd',country:'GB',currency:'GBP',overhead:25,email:'info@losjurados.co.uk',phone:'',notes:'Лондон'},
+  {id:'b5',name:'FLC Hong Kong',code:'HK',entity:'FLC Ltd',country:'HK',currency:'HKD',overhead:15,email:'info@flc.hk',phone:'',notes:'Гонконг'},
+];
+let services=[
+  {id:'s1',name:'Письменный перевод',cat:'Перевод',price:0.10,currency:'EUR',unit:'слово',desc:'',pairs:[['Русский','Английский'],['Русский','Испанский'],['Эстонский','Русский']]},
+  {id:'s2',name:'Нотариальное заверение',cat:'Нотариальное заверение',price:35,currency:'EUR',unit:'страница',desc:'',pairs:[]},
+  {id:'s3',name:'Апостиль',cat:'Апостиль',price:120,currency:'EUR',unit:'единица',desc:'',pairs:[]},
+  {id:'s4',name:'Почтовая доставка',cat:'Доставка',price:8.5,currency:'EUR',unit:'единица',desc:'',pairs:[]},
+  {id:'s5',name:'Присяжный перевод',cat:'Присяжный перевод',price:0.18,currency:'EUR',unit:'слово',desc:'',pairs:[['Русский','Испанский'],['Русский','Польский']]},
+  {id:'s6',name:'Редактура',cat:'Редактура',price:0.05,currency:'EUR',unit:'слово',desc:'',pairs:[['Русский','Английский']]},
+];
+let managers=[
+  {id:'m1',name:'Дмитрий Коваль',phone:'+34 600 999 000',email:'d.koval@tms.pro',branch:'b3',role:'Старший менеджер',notes:''},
+  {id:'m2',name:'Катерина Лейн',phone:'+372 500 8800',email:'k.lane@atcg.ee',branch:'b2',role:'Менеджер',notes:''},
+];
+let translators=[
+  {id:'t1',name:'Анна Карпова',type:'freelance',status:'active',langs:[{from:'Русский',to:'Английский',rate:0.06,currency:'EUR'},{from:'Русский',to:'Испанский',rate:0.07,currency:'EUR'}],specs:['Юридический','Личные документы'],capacity:5,active:2,email:'anna@example.com',phone:'+34 600 111 222',days:'Пн–Пт',notes:'',ratings:[{q:9,s:8,c:9,comment:'Отлично',orderId:'BCN-001'}]},
+  {id:'t2',name:'Мария Лепп',type:'staff',status:'active',langs:[{from:'Русский',to:'Эстонский',rate:0.07,currency:'EUR'},{from:'Эстонский',to:'Английский',rate:0.08,currency:'EUR'}],specs:['Академический','Нотариальный'],capacity:4,active:3,email:'maria@atcg.ee',phone:'+372 500 2233',days:'Пн–Пт',notes:'',ratings:[{q:10,s:7,c:10,comment:'Идеально',orderId:'EE-001'}]},
+  {id:'t3',name:'Дмитрий Вишня',type:'freelance',status:'active',langs:[{from:'Русский',to:'Польский',rate:240,currency:'PLN'},{from:'Польский',to:'Английский',rate:0.08,currency:'EUR'}],specs:['Технический','Финансовый'],capacity:6,active:4,email:'d@gmail.com',phone:'+48 604 000 111',days:'Пн–Сб',notes:'',ratings:[]},
+  {id:'t4',name:'Елена Соколова',type:'extern',status:'pause',langs:[{from:'Английский',to:'Русский',rate:0.08,currency:'EUR'},{from:'Испанский',to:'Русский',rate:0.07,currency:'EUR'}],specs:['Медицинский'],capacity:4,active:0,email:'elena@mail.ru',phone:'+7 916 333 4455',days:'Вт,Чт',notes:'',ratings:[]},
+  {id:'t5',name:'Арпад Немет',type:'freelance',status:'active',langs:[{from:'Эстонский',to:'Английский',rate:55,currency:'EUR'},{from:'Эстонский',to:'Русский',rate:50,currency:'EUR'}],specs:['Личные документы','Нотариальный'],capacity:3,active:1,email:'arpad@tolk.ee',phone:'+372 511 9988',days:'Пн–Пт',notes:'',ratings:[{q:9,s:9,c:8,comment:'Быстро',orderId:'EE-001'}]},
+  {id:'t6',name:'Карлос Мартин',type:'freelance',status:'active',langs:[{from:'Испанский',to:'Английский',rate:0.07,currency:'EUR'},{from:'Испанский',to:'Русский',rate:0.08,currency:'EUR'}],specs:['Юридический','Маркетинг'],capacity:5,active:2,email:'carlos@bcn.es',phone:'+34 699 222 333',days:'Пн–Пт',notes:'',ratings:[]},
+];
+let clients=[
+  {id:'c1',name:'Ольга Петрова',type:'phys',branch:'b3',phone:'+34 600 200 300',email:'olga@email.com',country:'Испания',lang:'Русский',notes:'Постоянный клиент'},
+  {id:'c2',name:'Carlos Ruiz',type:'phys',branch:'b3',phone:'+34 611 222 333',email:'carlos.ruiz@gmail.com',country:'Испания',lang:'Испанский',notes:''},
+  {id:'c3',name:'Mart Tamm',type:'phys',branch:'b2',phone:'+372 500 1122',email:'mart@mail.ee',country:'Эстония',lang:'Эстонский',notes:''},
+  {id:'c4',name:'ООО Глобал',type:'legal',branch:'b1',phone:'+375 17 000 0000',email:'info@global.by',country:'Беларусь',lang:'Русский',notes:'Корпоративный'},
+  {id:'c5',name:'Liu Wei',type:'phys',branch:'b5',phone:'+852 9000 1234',email:'liu@hk.com',country:'Гонконг',lang:'Английский',notes:''},
+];
+// executors: [{trId,doc,rate,currency,qty,cost}]
+let orders=[
+  {id:'BCN-001',client:'Ольга Петрова',clientId:'c1',from:'Русский',to:'Английский',service:'Письменный перевод',qty:420,price:52,currency:'EUR',deadline:'2026-06-05',urgency:'Обычный',status:'inprogress',branch:'b3',managerId:'m1',comment:'Нотариальное заверение',executors:[{trId:'t1',doc:'Диплом об образовании',rate:0.06,currency:'EUR',qty:420,cost:25.2}]},
+  {id:'BCN-002',client:'Carlos Ruiz',clientId:'c2',from:'Испанский',to:'Русский',service:'Письменный перевод',qty:1200,price:144,currency:'EUR',deadline:'2026-06-04',urgency:'Срочный (24ч)',status:'new',branch:'b3',managerId:'m1',comment:'',executors:[]},
+  {id:'EE-001',client:'Mart Tamm',clientId:'c3',from:'Эстонский',to:'Русский',service:'Нотариальное заверение',qty:2,price:90,currency:'EUR',deadline:'2026-06-03',urgency:'Обычный',status:'review',branch:'b2',managerId:'m2',comment:'',executors:[{trId:'t5',doc:'Свидетельство о рождении',rate:50,currency:'EUR',qty:1,cost:50},{trId:'t2',doc:'Аттестат',rate:45,currency:'EUR',qty:1,cost:45}]},
+  {id:'PVD-001',client:'ООО Глобал',clientId:'c4',from:'Русский',to:'Польский',service:'Письменный перевод',qty:3400,price:408,currency:'BYN',deadline:'2026-06-10',urgency:'Обычный',status:'inprogress',branch:'b1',managerId:'m1',comment:'Юридический',executors:[{trId:'t3',doc:'Договор поставки',rate:240,currency:'PLN',qty:3400,cost:204}]},
+  {id:'HK-001',client:'Liu Wei',clientId:'c5',from:'Китайский',to:'Английский',service:'Апостиль',qty:1,price:130,currency:'HKD',deadline:'2026-06-02',urgency:'Экспресс (4ч)',status:'new',branch:'b5',managerId:null,comment:'',executors:[]},
+  {id:'UK-001',client:'Anna Schmidt',clientId:null,from:'Английский',to:'Русский',service:'Письменный перевод',qty:650,price:78,currency:'GBP',deadline:'2026-06-07',urgency:'Обычный',status:'done',branch:'b4',managerId:'m1',comment:'',executors:[{trId:'t4',doc:'Медицинский документ',rate:0.08,currency:'EUR',qty:650,cost:52}]},
+];
+let oCnt={BCN:3,EE:2,PVD:2,HK:2,UK:2};
+let sCnt=7,brCnt=6,clCnt=6,mgCnt=3,trCnt=7;
+let oFilter='all',dFilter='all',dView='grid',clView='grid',mgView='grid',oView='cards',clFilter='all';
+let editOrderId=null,editTrId=null,editSvcId=null,editBrId=null,editClId=null,editMgId=null,execOrderIdCur=null;
+let rateOrderId=null,rateTrId=null,moRatings={q:0,s:0,c:0};
+let trTypeV='freelance',trStatusV='active',trDaysV=new Set(['mo','tu','we','th','fr']),trSpecsV=new Set(),trAvIdx=0,clTypeV='phys';
+
+// utils
+const ini=n=>n.split(' ').map(w=>w[0]||'').join('').toUpperCase().slice(0,2)||'?';
+const pal=i=>PAL[i%PAL.length];
+const lc=p=>p>=65?'#27ae60':p>=45?'#d4a017':'#c0392b';
+const gl=t=>Math.round((t.active/t.capacity)*100);
+const csym=c=>(CURRS.find(x=>x.c===c)||{s:'€'}).s;
+const cr=c=>(CURRS.find(x=>x.c===c)||{r:1}).r;
+const getBr=id=>branches.find(b=>b.id===id);
+const getTr=id=>translators.find(t=>t.id===id);
+const getCl=id=>clients.find(c=>c.id===id);
+const getSvc=id=>services.find(s=>s.id===id);
+const getMg=id=>managers.find(m=>m.id===id);
+const tlbl={freelance:'Фриланс',staff:'Штатный',extern:'Внешний'};
+const slbl={active:'Активен',pause:'Пауза',off:'Не работает'};
+
+function totalExecCost(o){
+  // returns cost in order's currency
+  return o.executors.reduce((s,e)=>{
+    const costEur=e.cost*cr(e.currency);
+    return s+costEur/cr(o.currency);
+  },0);
+}
+function calcProfit(o){
+  const br=getBr(o.branch);const oh=br?br.overhead:20;
+  const trCost=Math.round(totalExecCost(o)*100)/100;
+  const ohAmt=Math.round(o.price*(oh/100)*100)/100;
+  const profit=Math.round((o.price-trCost-ohAmt)*100)/100;
+  const margin=o.price>0?Math.round((profit/o.price)*100*10)/10:0;
+  return{profit,margin,trCost,ohAmt,oh};
+}
+function avgRating(t){
+  if(!t.ratings||!t.ratings.length)return null;
+  const n=t.ratings.length;
+  const q=t.ratings.reduce((a,r)=>a+r.q,0)/n;
+  const s=t.ratings.reduce((a,r)=>a+r.s,0)/n;
+  const c=t.ratings.reduce((a,r)=>a+r.c,0)/n;
+  return{q:q.toFixed(1),s:s.toFixed(1),c:c.toFixed(1),avg:((q+s+c)/3).toFixed(1),count:n};
+}
+function obadge(o){
+  const s=!o.executors?.length&&o.status!=='done'?'unassigned':o.status;
+  const lm={new:'Новый',inprogress:'В работе',review:'На проверке',done:'Готово',unassigned:'Без исп.'};
+  const cm={new:'bn',inprogress:'bi',review:'br_',done:'bd_',unassigned:'bu'};
+  return`<span class="badge ${cm[s]||'bn'}">${lm[s]||s}</span>`;
+}
+function stbadge(s){
+  const m={active:'bactive',pause:'bpause',off:'boff'};const l={active:'Активен',pause:'Пауза',off:'Не работает'};
+  return`<span class="badge ${m[s]||'bd_'}">${l[s]||s}</span>`;
+}
+function nextOId(branchId){
+  const br=getBr(branchId);if(!br)return'ORD-001';
+  const code=br.code;if(!oCnt[code])oCnt[code]=1;
+  return`${code}-${String(oCnt[code]++).padStart(3,'0')}`;
+}
+
+// NAV
+function showPage(p){
+  document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));
+  document.getElementById('page-'+p).classList.add('active');
+  document.querySelectorAll('.nl').forEach(l=>{l.classList.toggle('active',(l.getAttribute('onclick')||'').includes("'"+p+"'"));});
+  ({workload:renderWL,directory:renderDir,services:renderSvc,branches:renderBranches,clients:renderClients,managers:renderManagers,dashboard:renderDashboard})[p]?.();
+  updBadge();
+}
+function updBadge(){
+  const n=orders.filter(o=>!o.executors?.length&&o.status!=='done').length;
+  const el=document.getElementById('ubadge');
+  el.textContent=n?n+' без исп.':'';el.style.display=n?'inline':'none';
+}
+
+// DASHBOARD
+function renderDashboard(){
+  const active=orders.filter(o=>o.status!=='done');
+  const totalRev=active.reduce((s,o)=>s+(o.price*cr(o.currency)),0);
+  const totalProfit=active.reduce((s,o)=>{const p=calcProfit(o);return s+(p.profit*cr(o.currency));},0);
+  document.getElementById('dash-total').innerHTML=`
+    <div><div class="dt-val">${active.length}</div><div class="dt-lbl">Активных заказов</div></div>
+    <div><div class="dt-val">€${Math.round(totalRev).toLocaleString('ru')}</div><div class="dt-lbl">Суммарная выручка (≈EUR)</div></div>
+    <div><div class="dt-val" style="color:var(--ot)">€${Math.round(totalProfit).toLocaleString('ru')}</div><div class="dt-lbl">Суммарная прибыль (≈EUR)</div></div>
+  `;
+  document.getElementById('dash-grid').innerHTML=branches.map(b=>{
+    const bO=orders.filter(o=>o.branch===b.id&&o.status!=='done');
+    const rev=bO.reduce((s,o)=>s+o.price,0);
+    const profit=bO.reduce((s,o)=>s+calcProfit(o).profit,0);
+    const margin=rev>0?Math.round((profit/rev)*100):0;
+    const sym=csym(b.currency);
+    return`<div class="dash-card" onclick="viewBrOrders('${b.id}')">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:7px">
+        <span style="font-size:22px">${FLAGS[b.country]||'🌐'}</span>
+        <div><div style="font-size:13px;font-weight:600;font-family:var(--m)">${b.name}</div><div style="font-size:10px;color:var(--t2)">${b.entity}</div></div>
+      </div>
+      <div style="font-size:11px;color:var(--t2);margin-bottom:8px;font-family:var(--m)">${b.name} <span style="color:var(--t)">${bO.length} заказов</span> | <span style="color:var(--t)">${sym}${Math.round(rev).toLocaleString('ru')} выручка</span> | <span style="color:${margin>=65?'var(--ot)':'var(--dt)'}">  ${sym}${Math.round(profit).toLocaleString('ru')} прибыль</span></div>
+      <div class="dash-stats">
+        <div class="dash-stat"><div class="dash-stat-val">${bO.length}</div><div class="dash-stat-lbl">заказов</div></div>
+        <div class="dash-stat"><div class="dash-stat-val" style="font-size:11px">${sym}${Math.round(rev).toLocaleString('ru')}</div><div class="dash-stat-lbl">выручка</div></div>
+        <div class="dash-stat" style="background:${margin>=65?'var(--obg)':'var(--dbg)'}"><div class="dash-stat-val" style="font-size:11px;color:${margin>=65?'var(--ot)':'var(--dt)'}">${sym}${Math.round(profit).toLocaleString('ru')}</div><div class="dash-stat-lbl" style="color:${margin>=65?'var(--ot)':'var(--dt)'}">прибыль ${margin}%</div></div>
+      </div>
+    </div>`;
+  }).join('');
+  const recent=orders.filter(o=>o.status!=='done').slice(0,5);
+  document.getElementById('dash-orders').innerHTML=recent.map(o=>renderOCard(o)).join('');
+}
+
+// ORDERS
+function setOF(f,el){oFilter=f;document.querySelectorAll('#page-orders .chip').forEach(c=>c.classList.remove('active'));el.classList.add('active');renderOrders();}
+function setOV(v){oView=v;document.getElementById('obg').classList.toggle('active',v==='cards');document.getElementById('obl').classList.toggle('active',v==='table');renderOrders();}
+function renderOrders(){
+  const brf=document.getElementById('o-br-f')?.value||'';
+  let list=orders;
+  if(oFilter==='unassigned')list=orders.filter(o=>!o.executors?.length&&o.status!=='done');
+  else if(oFilter!=='all')list=orders.filter(o=>o.status===oFilter);
+  if(brf)list=list.filter(o=>o.branch===brf);
+  document.getElementById('ocount').textContent=list.length+' заказов';
+  if(oView==='table'){
+    document.getElementById('orders-list').innerHTML=`<div class="card"><table class="ltbl"><thead><tr><th>ID</th><th>Клиент</th><th>Услуга</th><th>Выручка</th><th>Прибыль</th><th>Маржа</th><th>Статус</th><th>Срок</th><th></th></tr></thead><tbody>${list.map(o=>{
+      const pv=calcProfit(o);
+      return`<tr><td style="font-family:var(--m)">${o.id}</td><td style="font-weight:500">${o.client}</td><td>${o.service}</td><td style="font-family:var(--m)">${csym(o.currency)}${o.price}</td><td style="font-family:var(--m);color:${pv.margin<65?'var(--dt)':'var(--ot)'}">${csym(o.currency)}${pv.profit}</td><td><span style="font-family:var(--m);font-size:10px;font-weight:600;color:${lc(pv.margin)}">${pv.margin}%</span></td><td>${obadge(o)}</td><td style="font-family:var(--m);font-size:10px">${o.deadline}</td><td onclick="event.stopPropagation()"><button class="btn-sm btn-danger" onclick="confirmDel('order','${o.id}','заказ ${o.id}')"><i class="ti ti-trash" style="font-size:10px"></i></button></td></tr>`;
+    }).join('')}</tbody></table></div>`;
+  } else {
+    document.getElementById('orders-list').innerHTML=`<div style="display:flex;flex-direction:column;gap:5px">${list.map(o=>renderOCard(o)).join('')}</div>`;
+  }
+}
+function renderOCard(o){
+  const pv=calcProfit(o);const br=getBr(o.branch);const mg=getMg(o.managerId);
+  const profCls=pv.margin<65?'bad':pv.margin<80?'warn':'';
+  const urg=o.urgency!=='Обычный'?`<span class="badge ${o.urgency.includes('Экспресс')?'bu':'br_'}">${o.urgency}</span>`:'';
+  const execNames=o.executors.map(e=>getTr(e.trId)?.name||'').filter(Boolean);
+  return`<div class="ocard" id="oc-${o.id}">
+    <div class="ocard-hdr" onclick="toggleOCard('${o.id}')">
+      <div class="ocard-profit ${profCls}">
+        <div class="ocard-pval">${csym(o.currency)}${pv.profit}</div>
+        <div class="ocard-plbl">прибыль&nbsp;${pv.margin}%</div>
+      </div>
+      <div class="ocard-body">
+        <div style="display:flex;align-items:center;gap:4px;flex-wrap:wrap;margin-bottom:3px">
+          <span style="font-size:10px;color:var(--t2);font-family:var(--m)">${o.id}</span>
+          ${obadge(o)} ${urg}
+          ${br?`<span class="pill">${FLAGS[br.country]||'🌐'} ${br.name}</span>`:''}
+          ${mg?`<span class="pill"><i class="ti ti-user-check" style="font-size:9px;vertical-align:-1px"></i> ${mg.name.split(' ')[0]}</span>`:''}
+        </div>
+        <div style="font-size:13px;font-weight:600">${o.client}</div>
+        <div class="opills">
+          <span class="pill">${o.from}→${o.to}</span>
+          <span class="pill">${o.service}</span>
+          <span class="pill" style="font-family:var(--m)">${csym(o.currency)}${o.price}</span>
+          ${execNames.length?`<span class="pill"><i class="ti ti-user" style="font-size:9px"></i> ${execNames.join(', ')}</span>`:''}
+        </div>
+        ${pv.margin<65&&o.executors.length?`<div style="font-size:10px;color:var(--dt);margin-top:4px;display:flex;align-items:center;gap:3px"><i class="ti ti-alert-triangle" style="font-size:10px"></i>Нерентабельно — увеличьте стоимость или договоритесь с исполнителем</div>`:''}
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:3px;flex-shrink:0">
+        <span style="font-size:10px;color:var(--t2)">${o.deadline}</span>
+        <i class="ti ti-chevron-down" style="font-size:11px;color:var(--t3)"></i>
+      </div>
+    </div>
+    <div class="ocard-exp" id="oexp-${o.id}">${renderOExpand(o)}</div>
+  </div>`;
+}
+function renderOExpand(o){
+  const pv=calcProfit(o);const mg=getMg(o.managerId);
+  const execHtml=o.executors.length?`<div class="exec-list">${o.executors.map((e,i)=>{
+    const t=getTr(e.trId);const[bg,col]=pal(translators.indexOf(t)||0);
+    return`<div class="exec-item">
+      <div class="av av-s" style="background:${bg};color:${col}">${ini(t?.name||'?')}</div>
+      <div class="exec-item-main">
+        <div style="font-size:11px;font-weight:500">${t?.name||'—'}</div>
+        <div class="exec-doc">${e.doc||'—'}</div>
+      </div>
+      <div class="exec-rate">${csym(e.currency)}${e.cost}</div>
+      <button class="btn-sm btn-danger" onclick="removeExec('${o.id}',${i});event.stopPropagation()"><i class="ti ti-x" style="font-size:10px"></i></button>
+    </div>`;
+  }).join('')}</div>`:`<div style="font-size:10px;color:var(--t3);padding:4px 0">Нет исполнителей</div>`;
+
+  return`<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;padding-top:10px">
+    <div>
+      <div class="slbl">Детали заказа</div>
+      <div class="drrow"><span>Услуга</span><span>${o.service}</span></div>
+      <div class="drrow"><span>Пара</span><span>${o.from}→${o.to}</span></div>
+      <div class="drrow"><span>Кол-во</span><span>${o.qty} ед.</span></div>
+      <div class="drrow"><span>Цена клиента</span><span style="color:var(--t)">${csym(o.currency)}${o.price}</span></div>
+      <div class="drrow"><span>Расходы исп.</span><span>${csym(o.currency)}${pv.trCost}</span></div>
+      <div class="drrow"><span>Накладные ${pv.oh}%</span><span>${csym(o.currency)}${pv.ohAmt}</span></div>
+      <div class="drrow" style="padding-top:5px;border-top:0.5px solid var(--bd);margin-top:3px">
+        <span style="font-weight:600;font-size:12px">Наша прибыль</span>
+        <span style="font-size:15px;font-weight:700;font-family:var(--m);color:${lc(pv.margin)}">${csym(o.currency)}${pv.profit}</span>
+      </div>
+      ${mg?`<div class="drrow"><span>Менеджер</span><span>${mg.name}</span></div>`:''}
+      ${o.comment?`<div class="drrow"><span>Комм.</span><span>${o.comment}</span></div>`:''}
+      <div style="display:flex;gap:4px;flex-wrap:wrap;margin-top:7px">
+        <button class="btn-sm" onclick="editOrder('${o.id}')"><i class="ti ti-edit" style="font-size:10px;vertical-align:-1px;margin-right:2px"></i>Изменить</button>
+        ${o.status==='done'&&o.executors.length?`<button class="btn-sm" onclick="openRateMo('${o.id}','${o.executors[0].trId}')"><i class="ti ti-star" style="font-size:10px;vertical-align:-1px;margin-right:2px"></i>Оценить</button>`:''}
+        <button class="btn-sm btn-danger" onclick="confirmDel('order','${o.id}','заказ ${o.id}')"><i class="ti ti-trash" style="font-size:10px;vertical-align:-1px;margin-right:2px"></i>Удалить</button>
+      </div>
+    </div>
+    <div>
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:5px">
+        <div class="slbl" style="margin-bottom:0">Исполнители (${o.executors.length})</div>
+        <button class="btn-sm" onclick="openExecMo('${o.id}')"><i class="ti ti-plus" style="font-size:10px;vertical-align:-1px;margin-right:2px"></i>Добавить</button>
+      </div>
+      ${execHtml}
+    </div>
+  </div>`;
+}
+function toggleOCard(id){
+  const card=document.getElementById('oc-'+id);if(!card)return;
+  const wasOpen=card.classList.contains('open');
+  document.querySelectorAll('.ocard.open').forEach(c=>c.classList.remove('open'));
+  if(!wasOpen)card.classList.add('open');
+}
+function refreshOCard(id){
+  const o=orders.find(x=>x.id===id);if(!o)return;
+  const el=document.getElementById('oc-'+id);if(!el)return;
+  el.outerHTML=renderOCard(o);
+  document.getElementById('oc-'+id)?.classList.add('open');
+}
+function removeExec(orderId,idx){
+  const o=orders.find(x=>x.id===orderId);if(!o)return;
+  const t=getTr(o.executors[idx].trId);
+  if(t&&t.active>0)t.active--;
+  o.executors.splice(idx,1);
+  refreshOCard(orderId);updBadge();
+}
+
+// EXEC MODAL
+function openExecMo(orderId){
+  execOrderIdCur=orderId;
+  const o=orders.find(x=>x.id===orderId);
+  const brCur=getBr(o.branch)?.currency||'EUR';
+  const sel=document.getElementById('exec-tr');
+  sel.innerHTML=translators.map(t=>`<option value="${t.id}">${t.name}</option>`).join('');
+  sel.onchange=onExecTrChange;
+  document.getElementById('exec-doc').value='';
+  document.getElementById('exec-qty').value=o.qty||'';
+  document.getElementById('exec-sym').textContent=csym(brCur);
+  document.getElementById('exec-csym').textContent=csym(brCur);
+  onExecTrChange();
+  document.getElementById('mo-exec').style.display='block';
+}
+function onExecTrChange(){
+  const o=orders.find(x=>x.id===execOrderIdCur);if(!o)return;
+  const t=getTr(document.getElementById('exec-tr').value);
+  const lp=t?.langs.find(l=>l.from===o.from&&l.to===o.to);
+  if(lp){document.getElementById('exec-rate').value=lp.rate;}
+  calcExecCost();
+}
+function calcExecCost(){
+  const rate=parseFloat(document.getElementById('exec-rate').value)||0;
+  const qty=parseFloat(document.getElementById('exec-qty').value)||0;
+  if(rate&&qty)document.getElementById('exec-cost').value=Math.round(rate*qty*100)/100;
+}
+function saveExec(){
+  const o=orders.find(x=>x.id===execOrderIdCur);if(!o)return;
+  const trId=document.getElementById('exec-tr').value;const t=getTr(trId);
+  const brCur=getBr(o.branch)?.currency||'EUR';
+  o.executors.push({trId,doc:document.getElementById('exec-doc').value||'',rate:parseFloat(document.getElementById('exec-rate').value)||0,currency:brCur,qty:parseFloat(document.getElementById('exec-qty').value)||0,cost:parseFloat(document.getElementById('exec-cost').value)||0});
+  if(o.status==='new')o.status='inprogress';
+  if(t)t.active=orders.filter(x=>x.executors.some(e=>e.trId===t.id)&&x.status!=='done').length;
+  closeMo('mo-exec');refreshOCard(execOrderIdCur);updBadge();
+}
+
+// ORDER MODAL
+function openMo(id){
+  if(id==='mo-order'){
+    editOrderId=null;
+    document.getElementById('mo-order-ttl').textContent='Новый заказ';
+    populateBrOpts('no-branch',false);populateSvcOpts();populateMgOpts();
+    ['no-client','no-contact','no-qty','no-price','no-comment','no-deadline'].forEach(i2=>{document.getElementById(i2).value='';});
+    onNoBranch();calcNoMargin();
+  }
+  document.getElementById(id).style.display='block';
+}
+function editOrder(id){
+  editOrderId=id;const o=orders.find(x=>x.id===id);if(!o)return;
+  document.getElementById('mo-order-ttl').textContent='Редактировать заказ';
+  populateBrOpts('no-branch',false);populateSvcOpts();populateMgOpts();
+  document.getElementById('no-branch').value=o.branch;
+  document.getElementById('no-client').value=o.client;
+  document.getElementById('no-contact').value='';
+  document.getElementById('no-qty').value=o.qty;
+  document.getElementById('no-price').value=o.price;
+  document.getElementById('no-deadline').value=o.deadline;
+  document.getElementById('no-urgency').value=o.urgency;
+  document.getElementById('no-comment').value=o.comment||'';
+  document.getElementById('no-manager').value=o.managerId||'';
+  onNoBranch();calcNoMargin();
+  document.getElementById('mo-order').style.display='block';
+}
+function closeMo(id){document.getElementById(id).style.display='none';}
+function populateBrOpts(selId,addAll){
+  const sel=document.getElementById(selId);if(!sel)return;
+  sel.innerHTML=(addAll?'<option value="">Все филиалы</option>':'')+branches.map(b=>`<option value="${b.id}">${FLAGS[b.country]||'🌐'} ${b.name}</option>`).join('');
+}
+function populateSvcOpts(){
+  document.getElementById('no-svc').innerHTML=services.map(s=>`<option value="${s.id}">${s.name}</option>`).join('');onNoSvc();
+}
+function populateMgOpts(){
+  document.getElementById('no-manager').innerHTML='<option value="">— без менеджера —</option>'+managers.map(m=>`<option value="${m.id}">${m.name}</option>`).join('');
+}
+function onNoBranch(){const br=getBr(document.getElementById('no-branch').value);if(br)document.getElementById('no-csym').textContent=csym(br.currency);calcNoMargin();}
+function onNoSvc(){
+  const svc=getSvc(document.getElementById('no-svc').value);
+  const ps=document.getElementById('no-pair');
+  ps.innerHTML=(svc?.pairs?.length?svc.pairs.map(p=>`<option value="${p[0]}|${p[1]}">${p[0]} → ${p[1]}</option>`).join(''):LANGS.map(l=>`<option value="${l}|${l}">→ ${l}</option>`).join(''));
+  calcNoPrice();
+}
+function calcNoPrice(){
+  const svc=getSvc(document.getElementById('no-svc').value);
+  const qty=parseFloat(document.getElementById('no-qty').value)||0;
+  if(svc&&qty){const br=getBr(document.getElementById('no-branch').value);const bc=br?br.currency:'EUR';document.getElementById('no-price').value=Math.round(svc.price*qty*(cr(svc.currency)/cr(bc))*100)/100;}
+  calcNoMargin();
+}
+function calcNoMargin(){
+  const price=parseFloat(document.getElementById('no-price').value)||0;
+  const el=document.getElementById('no-margin-wrap');if(!price){el.innerHTML='';return;}
+  const br=getBr(document.getElementById('no-branch').value);const oh=br?br.overhead:20;
+  const m=Math.round((1-oh/100-0.5)*100);
+  const col=m<65?'var(--dt)':m<80?'var(--wt)':'var(--ot)';const bg=m<65?'var(--dbg)':m<80?'var(--wbg)':'var(--obg)';
+  el.innerHTML=`<div style="padding:6px 8px;background:${bg};border-radius:var(--r);font-size:10px;color:${col};font-family:var(--m);font-weight:600">Прогноз маржи: ~${m}% <span style="font-weight:400;color:var(--t2)">(уточнится после добавления исполнителей)</span>${m<65?' ⚠️':''}</div>`;
+}
+function saveOrder(){
+  const client=document.getElementById('no-client').value.trim();if(!client){document.getElementById('no-client').focus();return;}
+  const brId=document.getElementById('no-branch').value;
+  const pv=document.getElementById('no-pair').value;const[from,to]=pv.split('|');
+  const svcSel=document.getElementById('no-svc');const svcName=svcSel.options[svcSel.selectedIndex]?.text||'Перевод';
+  if(editOrderId){
+    const o=orders.find(x=>x.id===editOrderId);
+    if(o){o.client=client;o.from=from;o.to=to;o.service=svcName;o.qty=parseInt(document.getElementById('no-qty').value)||0;o.price=parseFloat(document.getElementById('no-price').value)||0;o.deadline=document.getElementById('no-deadline').value||'—';o.urgency=document.getElementById('no-urgency').value;o.comment=document.getElementById('no-comment').value;o.managerId=document.getElementById('no-manager').value||null;}
+  } else {
+    orders.unshift({id:nextOId(brId),client,clientId:null,from,to,service:svcName,qty:parseInt(document.getElementById('no-qty').value)||0,price:parseFloat(document.getElementById('no-price').value)||0,currency:getBr(brId)?.currency||'EUR',deadline:document.getElementById('no-deadline').value||'—',urgency:document.getElementById('no-urgency').value,status:'new',branch:brId,managerId:document.getElementById('no-manager').value||null,comment:document.getElementById('no-comment').value,executors:[]});
+  }
+  closeMo('mo-order');renderOrders();updBadge();
+  if(document.getElementById('page-dashboard').classList.contains('active'))renderDashboard();
+}
+function viewBrOrders(brId){showPage('orders');document.getElementById('o-br-f').value=brId;oFilter='all';document.querySelectorAll('#page-orders .chip').forEach((c,i)=>{c.classList.toggle('active',i===0);});renderOrders();}
+
+// CLIENTS
+function setCF(f,el){clFilter=f;document.querySelectorAll('#page-clients .chip').forEach(c=>c.classList.remove('active'));el.classList.add('active');renderClients();}
+function setCLV(v){clView=v;document.getElementById('clbg').classList.toggle('active',v==='grid');document.getElementById('clbl').classList.toggle('active',v==='table');renderClients();}
+function renderClients(){
+  const q=(document.getElementById('cl-search')?.value||'').toLowerCase();
+  const brf=document.getElementById('cl-br-f')?.value||'';
+  let list=clients.filter(c=>{
+    const mf=clFilter==='all'||(clFilter==='phys'&&c.type==='phys')||(clFilter==='legal'&&c.type==='legal');
+    return mf&&(!brf||c.branch===brf)&&(!q||c.name.toLowerCase().includes(q)||c.email.toLowerCase().includes(q)||c.phone.includes(q));
+  });
+  document.getElementById('clcount').textContent=list.length+' клиентов';
+  if(clView==='table'){
+    document.getElementById('cl-view').innerHTML=`<div class="card"><table class="ltbl"><thead><tr><th>Клиент</th><th>Тип</th><th>Телефон</th><th>Email</th><th>Заказов</th><th>Филиал</th><th></th></tr></thead><tbody>${list.map((c,i)=>{
+      const br=getBr(c.branch);const cnt=orders.filter(o=>o.clientId===c.id).length;const[bg,col]=pal(i);
+      return`<tr onclick="openClDr('${c.id}')"><td><div style="display:flex;align-items:center;gap:6px"><div class="av av-s" style="background:${bg};color:${col}">${ini(c.name)}</div><span style="font-weight:500">${c.name}</span></div></td><td>${c.type==='legal'?'Юр.':'Физ.'}</td><td style="font-family:var(--m);font-size:10px">${c.phone||'—'}</td><td style="font-size:10px">${c.email||'—'}</td><td><span class="badge bi">${cnt}</span></td><td>${br?FLAGS[br.country]+' '+br.name:''}</td><td onclick="event.stopPropagation()"><button class="btn-sm btn-danger" onclick="confirmDel('client','${c.id}','клиента ${c.name}')"><i class="ti ti-trash" style="font-size:10px"></i></button></td></tr>`;
+    }).join('')}</tbody></table></div>`;
+  } else {
+    document.getElementById('cl-view').innerHTML=`<div class="cl-grid">${list.map((c,i)=>{
+      const[bg,col]=pal(i);const br=getBr(c.branch);const cnt=orders.filter(o=>o.clientId===c.id).length;
+      return`<div class="clcard" onclick="openClDr('${c.id}')">
+        <div style="display:flex;align-items:center;gap:7px;margin-bottom:8px"><div class="av av-m" style="background:${bg};color:${col}">${ini(c.name)}</div><div><div style="font-size:12px;font-weight:600">${c.name}</div><div style="font-size:9px;color:var(--t2)">${c.type==='legal'?'Юр. лицо':'Физ. лицо'}${br?' · '+br.name:''}</div></div></div>
+        <div style="font-size:10px;color:var(--t2)">${c.phone||''}</div><div style="font-size:10px;color:var(--t2)">${c.email||''}</div>
+        <div style="margin-top:6px;display:flex;justify-content:space-between;align-items:center">
+          ${cnt?`<span class="badge bi">${cnt} заказов</span>`:'<span class="badge bd_">нет заказов</span>'}
+          <button class="btn-sm btn-danger" onclick="event.stopPropagation();confirmDel('client','${c.id}','клиента ${c.name}')"><i class="ti ti-trash" style="font-size:10px"></i></button>
+        </div>
+      </div>`;
+    }).join('')}</div>`;
+  }
+}
+function openClMo(id){
+  editClId=id;
+  document.getElementById('mo-cl-ttl').textContent=id?'Редактировать клиента':'Новый клиент';
+  populateBrOpts('cl-branch',false);
+  if(id){
+    const c=getCl(id);if(!c)return;
+    document.getElementById('cl-name').value=c.name;document.getElementById('cl-branch').value=c.branch;document.getElementById('cl-phone').value=c.phone||'';document.getElementById('cl-email').value=c.email||'';document.getElementById('cl-country').value=c.country||'';document.getElementById('cl-lang').value=c.lang||'Русский';document.getElementById('cl-notes').value=c.notes||'';
+    clTypeV=c.type;document.querySelectorAll('#cl-type-opts .sopt').forEach((b,i)=>{b.className='sopt';if((i===0&&c.type==='phys')||(i===1&&c.type==='legal'))b.classList.add('info');});
+  } else {
+    ['cl-name','cl-phone','cl-email','cl-country','cl-notes'].forEach(i2=>{document.getElementById(i2).value='';});
+    clTypeV='phys';document.querySelectorAll('#cl-type-opts .sopt').forEach((b,i)=>{b.className='sopt';if(i===0)b.classList.add('info');});
+  }
+  document.getElementById('mo-client').style.display='block';
+}
+function openClDr(id){
+  const c=getCl(id);if(!c)return;
+  const i=clients.indexOf(c);const[bg,col]=pal(i);const br=getBr(c.branch);
+  const cOrders=orders.filter(o=>o.clientId===c.id);
+  document.getElementById('drav').className='av av-m';Object.assign(document.getElementById('drav').style,{background:bg,color:col});
+  document.getElementById('drav').textContent=ini(c.name);
+  document.getElementById('drname').textContent=c.name;
+  document.getElementById('drtype').textContent=(c.type==='legal'?'Юр. лицо':'Физ. лицо')+(br?' · '+br.name:'');
+  document.getElementById('drbody').innerHTML=`
+    <div class="drsec"><div class="slbl">Контакты</div>
+      <div class="drrow"><span>Телефон</span><span>${c.phone||'—'}</span></div>
+      <div class="drrow"><span>Email</span><span>${c.email||'—'}</span></div>
+      <div class="drrow"><span>Страна</span><span>${c.country||'—'}</span></div>
+      <div class="drrow"><span>Язык</span><span>${c.lang||'—'}</span></div>
+    </div>
+    <div class="drsec"><div class="slbl">История заказов (${cOrders.length})</div>
+      ${cOrders.length?cOrders.map(o=>`<div style="padding:5px 0;border-bottom:0.5px solid var(--bd);cursor:pointer" onclick="closeDr();showPage('orders');setTimeout(()=>{document.getElementById('o-br-f').value='';oFilter='all';renderOrders();toggleOCard('${o.id}')},80)">
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:4px">${obadge(o)}<span style="font-size:9px;font-family:var(--m);color:var(--t2)">${o.id}</span></div>
+        <div style="font-size:11px;color:var(--t);margin-top:1px">${o.service} · ${o.from}→${o.to}</div>
+        <div style="font-size:10px;font-family:var(--m);color:var(--ot);font-weight:600">${csym(o.currency)}${o.price} · прибыль ${csym(o.currency)}${calcProfit(o).profit}</div>
+        <div style="font-size:9px;color:var(--t3)">${o.deadline}</div>
+      </div>`).join(''):'<div style="font-size:10px;color:var(--t3)">Нет заказов</div>'}
+    </div>
+    ${c.notes?`<div class="drsec"><div class="slbl">Заметки</div><p style="font-size:10px;color:var(--t2)">${c.notes}</p></div>`:''}
+  `;
+  document.getElementById('drfoot').innerHTML=`
+    <button class="btn" style="flex:1" onclick="closeDr();openClMo('${c.id}')"><i class="ti ti-edit" style="font-size:11px;vertical-align:-1px;margin-right:3px"></i>Редактировать</button>
+    <button class="btn-sm btn-danger" onclick="closeDr();confirmDel('client','${c.id}','клиента ${c.name}')"><i class="ti ti-trash" style="font-size:11px"></i></button>
+  `;
+  document.getElementById('drbd').style.display='flex';
+}
+function setClType(el,v){clTypeV=v;document.querySelectorAll('#cl-type-opts .sopt').forEach(b=>{b.className='sopt';});el.classList.add('info');}
+function saveClient(){
+  const name=document.getElementById('cl-name').value.trim();if(!name){document.getElementById('cl-name').focus();return;}
+  const data={name,type:clTypeV,branch:document.getElementById('cl-branch').value,phone:document.getElementById('cl-phone').value,email:document.getElementById('cl-email').value,country:document.getElementById('cl-country').value,lang:document.getElementById('cl-lang').value,notes:document.getElementById('cl-notes').value};
+  if(editClId){const i=clients.findIndex(x=>x.id===editClId);if(i>=0)clients[i]={...clients[i],...data};}
+  else clients.push({id:'c'+clCnt++,...data});
+  closeMo('mo-client');renderClients();
+}
+function acClient(q){
+  const list=document.getElementById('ac-client');
+  if(!q||q.length<2){list.style.display='none';return;}
+  const m=clients.filter(c=>c.name.toLowerCase().includes(q.toLowerCase()));
+  if(!m.length){list.style.display='none';return;}
+  list.innerHTML=m.map(c=>`<div class="ac-item" onclick="selectAcCl('${c.id}')">${c.name} <span style="color:var(--t2)">${c.phone||''}</span></div>`).join('');
+  list.style.display='block';
+}
+function selectAcCl(id){
+  const c=getCl(id);if(!c)return;
+  document.getElementById('no-client').value=c.name;document.getElementById('no-contact').value=c.phone||(c.email||'');
+  document.getElementById('no-branch').value=c.branch||document.getElementById('no-branch').value;
+  onNoBranch();document.getElementById('ac-client').style.display='none';
+}
+document.addEventListener('click',e=>{if(!e.target.closest('.ac-wrap'))document.querySelectorAll('.ac-list').forEach(l=>l.style.display='none');});
+
+// RATING
+function openRateMo(orderId,trId){
+  rateOrderId=orderId;rateTrId=trId;const t=getTr(trId);const o=orders.find(x=>x.id===orderId);
+  document.getElementById('mo-rate-info').textContent=`${t?.name} · ${orderId} · ${o?.client}`;
+  moRatings={q:0,s:0,c:0};renderRatingCrits();document.getElementById('mo-rate-comment').value='';
+  document.getElementById('mo-rate').style.display='block';
+}
+function renderRatingCrits(){
+  const labels=['Качество','Скорость','Коммуникация'];const keys=['q','s','c'];
+  document.getElementById('mo-rate-crits').innerHTML=keys.map((k,i)=>`<div class="rcrit"><span style="font-size:11px">${labels[i]}</span><div class="rcstars">${[1,2,3,4,5,6,7,8,9,10].map(n=>`<span class="rcstar${(moRatings[k]||0)>=n?' on':''}" onclick="moRatings['${k}']=${n};renderRatingCrits()">★</span>`).join('')}</div><span style="font-size:10px;font-family:var(--m);color:var(--t2);min-width:24px;text-align:right">${moRatings[k]||0}/10</span></div>`).join('');
+}
+function submitRating(){
+  const t=getTr(rateTrId);if(!t)return;
+  if(!t.ratings)t.ratings=[];
+  t.ratings.push({q:moRatings.q||5,s:moRatings.s||5,c:moRatings.c||5,comment:document.getElementById('mo-rate-comment').value,orderId:rateOrderId});
+  closeMo('mo-rate');renderOrders();
+}
+
+// WORKLOAD
+function renderWL(){
+  document.getElementById('wl-grid').innerHTML=translators.map((t,i)=>{
+    const pct=gl(t);const[bg,col]=pal(i);const r=avgRating(t);
+    const active=orders.filter(o=>o.executors.some(e=>e.trId===t.id)&&o.status!=='done');
+    const done=orders.filter(o=>o.executors.some(e=>e.trId===t.id)&&o.status==='done').length;
+    const stxt=pct===0?'Свободен':pct<=60?'Норма':pct<=80?'Загружен':'Перегружен';
+    const scls=pct===0?'bactive':pct<=60?'bi':pct<=80?'br_':'bu';
+    return`<div class="wlcard">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:5px">
+        <div style="display:flex;align-items:center;gap:6px"><div class="av av-s" style="background:${bg};color:${col}">${ini(t.name)}</div><div><div style="font-size:11px;font-weight:600;font-family:var(--m)">${t.name}</div>${r?`<span style="font-size:9px;color:var(--wt);font-family:var(--m)">★${r.avg}(${r.count})</span>`:`<span style="font-size:9px;color:var(--t3)">—</span>`}</div></div>
+        <span class="badge ${scls}">${stxt}</span>
+      </div>
+      <div style="font-size:9px;color:var(--t3);margin-bottom:3px">${t.langs.map(l=>l.from.slice(0,3)+'→'+l.to.slice(0,3)).join(' · ')}</div>
+      <div class="lb" style="height:3px;margin-bottom:3px"><div class="lbf" style="width:${Math.min(pct,100)}%;background:${lc(pct)}"></div></div>
+      <div style="display:flex;justify-content:space-between;font-size:9px;color:var(--t3);font-family:var(--m);margin-bottom:6px"><span>${t.active}/${t.capacity}</span><span>${pct}%</span></div>
+      <div style="display:flex;gap:9px"><div><div style="font-size:13px;font-weight:600;font-family:var(--m)">${active.length}</div><div style="font-size:9px;color:var(--t3)">В работе</div></div><div><div style="font-size:13px;font-weight:600;font-family:var(--m)">${done}</div><div style="font-size:9px;color:var(--t3)">Выполнено</div></div><div><div style="font-size:13px;font-weight:600;font-family:var(--m)">${Math.max(0,t.capacity-t.active)}</div><div style="font-size:9px;color:var(--t3)">Свободно</div></div></div>
+      ${active.length?`<div style="border-top:0.5px solid var(--bd);margin-top:6px;padding-top:5px">${active.map(o=>`<div style="display:flex;justify-content:space-between;font-size:9px;color:var(--t2);padding:1px 0"><span>${o.id}</span><span style="font-family:var(--m)">${o.from.slice(0,3)}→${o.to.slice(0,3)}</span></div>`).join('')}</div>`:''}
+    </div>`;
+  }).join('');
+}
+
+// DIRECTORY
+function setDF(f,el){dFilter=f;document.querySelectorAll('#page-directory .chip').forEach(c=>c.classList.remove('active'));el.classList.add('active');renderDir();}
+function setDV(v){dView=v;document.getElementById('dbg').classList.toggle('active',v==='grid');document.getElementById('dbl').classList.toggle('active',v==='table');renderDir();}
+function filteredTr(){
+  const q=(document.getElementById('dir-search')?.value||'').toLowerCase();
+  return translators.filter(t=>{
+    const mf=dFilter==='all'||(dFilter==='active'&&t.status==='active')||(dFilter==='freelance'&&t.type==='freelance')||(dFilter==='staff'&&t.type==='staff');
+    return mf&&(!q||t.name.toLowerCase().includes(q)||t.langs.some(l=>l.from.toLowerCase().includes(q)||l.to.toLowerCase().includes(q)));
+  }).sort((a,b)=>{const ra=avgRating(a),rb=avgRating(b);return(rb?parseFloat(rb.avg):0)-(ra?parseFloat(ra.avg):0);});
+}
+function renderDir(){
+  const list=filteredTr();document.getElementById('dcount').textContent=list.length+' из '+translators.length;
+  if(dView==='table'){
+    document.getElementById('dir-view').innerHTML=`<div class="card"><table class="ltbl"><thead><tr><th>Исполнитель</th><th>Языки и ставки</th><th>Рейтинг</th><th>Нагрузка</th><th>Статус</th><th></th></tr></thead><tbody>${list.map((t,i)=>{
+      const pct=gl(t);const[bg,col]=pal(i);const r=avgRating(t);
+      return`<tr><td onclick="openTrDr('${t.id}')" style="cursor:pointer"><div style="display:flex;align-items:center;gap:6px"><div class="av av-s" style="background:${bg};color:${col}">${ini(t.name)}</div><div><div style="font-weight:500">${t.name}</div><div style="font-size:9px;color:var(--t2)">${tlbl[t.type]}</div></div></div></td>
+        <td style="font-size:9px;color:var(--t2)">${t.langs.map(l=>`${l.from}→${l.to} ${l.rate}${l.currency}`).join(', ')}</td>
+        <td><span style="font-size:11px;font-weight:600;font-family:var(--m);color:${r?'var(--wt)':'var(--t3)'}">${r?'★'+r.avg:'—'}</span></td>
+        <td><div style="display:flex;align-items:center;gap:3px"><div style="flex:1;height:3px;background:var(--bg3);border-radius:2px;min-width:28px"><div style="width:${Math.min(pct,100)}%;height:100%;background:${lc(pct)};border-radius:2px"></div></div><span style="font-size:9px;font-family:var(--m);color:var(--t3)">${pct}%</span></div></td>
+        <td>${stbadge(t.status)}</td>
+        <td><div style="display:flex;gap:3px"><button class="btn-sm" onclick="openTrMo('${t.id}')"><i class="ti ti-edit" style="font-size:10px"></i></button><button class="btn-sm btn-danger" onclick="confirmDel('translator','${t.id}','исполнителя ${t.name}')"><i class="ti ti-trash" style="font-size:10px"></i></button></div></td>
+      </tr>`;
+    }).join('')}</tbody></table></div>`;
+  } else {
+    document.getElementById('dir-view').innerHTML=`<div class="dir-grid">${list.map((t,i)=>{
+      const pct=gl(t);const[bg,col]=pal(i);const r=avgRating(t);
+      return`<div class="dcard" onclick="openTrDr('${t.id}')">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">
+          <div style="display:flex;align-items:center;gap:6px"><div class="av av-m" style="background:${bg};color:${col}">${ini(t.name)}</div><div><div style="font-size:11px;font-weight:600;font-family:var(--m)">${t.name}</div><div style="font-size:9px;color:var(--t2)">${tlbl[t.type]}</div></div></div>
+          ${r?`<span style="font-size:12px;font-weight:700;font-family:var(--m);color:var(--wt)">★${r.avg}</span>`:''}
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:2px;margin-bottom:5px">${t.langs.map(l=>`<span class="langpill">${l.from.slice(0,3)}→${l.to.slice(0,3)}</span>`).join('')}</div>
+        <div class="lb" style="height:3px;margin-bottom:3px"><div class="lbf" style="width:${Math.min(pct,100)}%;background:${lc(pct)}"></div></div>
+        <div style="display:flex;justify-content:space-between;font-size:9px;color:var(--t3);font-family:var(--m);margin-bottom:5px"><span>${t.active}/${t.capacity}</span><span>${pct}%</span></div>
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          ${stbadge(t.status)}
+          <div style="display:flex;gap:2px" onclick="event.stopPropagation()">
+            <button class="btn-sm" onclick="openTrMo('${t.id}')"><i class="ti ti-edit" style="font-size:10px"></i></button>
+            <button class="btn-sm btn-danger" onclick="confirmDel('translator','${t.id}','исполнителя ${t.name}')"><i class="ti ti-trash" style="font-size:10px"></i></button>
+          </div>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:2px;margin-top:4px">${t.specs.slice(0,3).map(s=>`<span class="spectag">${s}</span>`).join('')}</div>
+      </div>`;
+    }).join('')}</div>`;
+  }
+}
+function openTrDr(id){
+  const t=getTr(id);if(!t)return;
+  const i=translators.indexOf(t);const[bg,col]=pal(i);const pct=gl(t);const r=avgRating(t);
+  document.getElementById('drav').className='av av-m';Object.assign(document.getElementById('drav').style,{background:bg,color:col});
+  document.getElementById('drav').textContent=ini(t.name);
+  document.getElementById('drname').textContent=t.name;
+  document.getElementById('drtype').textContent=(tlbl[t.type]||t.type)+' · '+(slbl[t.status]||t.status);
+  document.getElementById('drbody').innerHTML=`
+    <div class="drsec"><div class="slbl">Рейтинг</div>${r?`<div style="background:var(--wbg);border-radius:var(--r);padding:7px;margin-bottom:5px"><div style="font-size:18px;font-weight:700;font-family:var(--m);color:var(--wt)">★${r.avg}</div><div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:3px;text-align:center;margin-top:3px;font-size:9px;color:var(--wt)"><div><div style="font-weight:600;font-family:var(--m)">${r.q}</div><div style="color:var(--t3)">Кач.</div></div><div><div style="font-weight:600;font-family:var(--m)">${r.s}</div><div style="color:var(--t3)">Скор.</div></div><div><div style="font-weight:600;font-family:var(--m)">${r.c}</div><div style="color:var(--t3)">Общ.</div></div></div><div style="font-size:9px;color:var(--t3);text-align:center;margin-top:3px">${r.count} оценок</div></div>`:'<div style="font-size:10px;color:var(--t3)">Нет оценок</div>'}</div>
+    <div class="drsec"><div class="slbl">Контакты</div><div class="drrow"><span>Email</span><span>${t.email}</span></div><div class="drrow"><span>Тел.</span><span>${t.phone}</span></div></div>
+    <div class="drsec"><div class="slbl">Языковые пары и ставки</div>${t.langs.map(l=>`<div class="drrow"><span>${l.from}→${l.to}</span><span>${l.rate} ${l.currency}/сл.</span></div>`).join('')}</div>
+    <div class="drsec"><div class="slbl">Специализация</div><div style="display:flex;flex-wrap:wrap;gap:2px;margin-top:2px">${t.specs.map(s=>`<span class="spectag">${s}</span>`).join('')}</div></div>
+    <div class="drsec"><div class="slbl">Нагрузка</div><div class="lb" style="height:3px;margin:3px 0"><div class="lbf" style="width:${Math.min(pct,100)}%;background:${lc(pct)}"></div></div><div class="drrow"><span>Заказов</span><span>${t.active} из ${t.capacity}</span></div></div>
+    ${t.notes?`<div class="drsec"><div class="slbl">Заметки</div><p style="font-size:10px;color:var(--t2);line-height:1.5">${t.notes}</p></div>`:''}
+  `;
+  document.getElementById('drfoot').innerHTML=`<button class="btn" style="flex:1" onclick="closeDr();openTrMo('${t.id}')"><i class="ti ti-edit" style="font-size:11px;vertical-align:-1px;margin-right:3px"></i>Редактировать</button><button class="btn-sm btn-danger" onclick="closeDr();confirmDel('translator','${t.id}','исполнителя ${t.name}')"><i class="ti ti-trash" style="font-size:11px"></i></button>`;
+  document.getElementById('drbd').style.display='flex';
+}
+function closeDr(){document.getElementById('drbd').style.display='none';}
+
+// TRANSLATOR FORM
+function buildLO(sel){return LANGS.map(l=>`<option${l===sel?' selected':''}>${l}</option>`).join('');}
+function buildCurOpts(sel){return CURRS.map(c=>`<option value="${c.c}"${c.c===sel?' selected':''}>${c.s} ${c.c}</option>`).join('');}
+function buildAllCurSels(){document.querySelectorAll('#tr-cur,#sv-cur,#br-cur').forEach(el=>{if(el)el.innerHTML=buildCurOpts('EUR');});}
+function openTrMo(id){
+  editTrId=id||null;
+  document.getElementById('mo-tr-ttl').textContent=id?'Редактировать исполнителя':'Новый исполнитель';
+  buildAllCurSels();
+  if(id){
+    const t=getTr(id);if(!t)return;
+    const parts=t.name.split(' ');
+    document.getElementById('tr-name').value=parts[0]||'';document.getElementById('tr-surname').value=parts.slice(1).join(' ')||'';
+    document.getElementById('tr-email').value=t.email||'';document.getElementById('tr-phone').value=t.phone||'';document.getElementById('tr-notes').value=t.notes||'';
+    document.getElementById('tr-cap').value=t.capacity||4;document.getElementById('tr-capv').textContent=t.capacity||4;
+    trTypeV=t.type||'freelance';trStatusV=t.status||'active';trSpecsV=new Set(t.specs||[]);trDaysV=new Set(['mo','tu','we','th','fr']);
+    const av=document.getElementById('tr-av');const[bx,cx]=pal(translators.indexOf(t));av.style.background=bx;av.style.color=cx;av.textContent=ini(t.name);
+    document.getElementById('tr-pairs').innerHTML='';t.langs.forEach(l=>addTrPair(l.from,l.to,l.rate,l.currency));
+  } else {
+    ['tr-name','tr-surname','tr-email','tr-phone','tr-notes'].forEach(i2=>{document.getElementById(i2).value='';});
+    document.getElementById('tr-av').textContent='?';document.getElementById('tr-av').style.background='var(--ibg)';document.getElementById('tr-av').style.color='var(--it)';
+    trTypeV='freelance';trStatusV='active';trSpecsV=new Set();trDaysV=new Set(['mo','tu','we','th','fr']);
+    document.getElementById('tr-pairs').innerHTML='';addTrPair('Русский','Английский',0.07,'EUR');
+  }
+  renderTrTypeOpts();renderTrStatusOpts();renderTrSpecs();renderTrDays();
+  document.getElementById('mo-tr').style.display='block';
+}
+function addTrPair(from,to,rate,cur){
+  from=from||'Русский';to=to||'Английский';rate=rate||0.07;cur=cur||'EUR';
+  const w=document.getElementById('tr-pairs');const d=document.createElement('div');d.className='lpr';
+  d.innerHTML=`<select style="flex:1;font-size:10px;padding:2px 4px">${buildLO(from)}</select><span style="color:var(--t3);font-size:10px;flex-shrink:0">→</span><select style="flex:1;font-size:10px;padding:2px 4px">${buildLO(to)}</select><div class="rfield" style="flex:1;min-width:65px"><span class="rsym trpsym" style="min-width:22px;font-size:9px">${csym(cur)}</span><input type="number" value="${rate}" step="0.001" style="font-size:10px"></div><select style="width:55px;font-size:9px;padding:1px 3px">${buildCurOpts(cur)}</select><button class="btn-sm" style="padding:1px 4px" onclick="this.parentElement.remove()"><i class="ti ti-x" style="font-size:9px"></i></button>`;
+  const curSel=d.querySelector('select:last-of-type');const sym=d.querySelector('.trpsym');
+  curSel.addEventListener('change',()=>{sym.textContent=csym(curSel.value);});
+  w.appendChild(d);
+}
+function updTrAv(){
+  const n=document.getElementById('tr-name').value.trim();const s=document.getElementById('tr-surname').value.trim();
+  const av=document.getElementById('tr-av');av.textContent=ini(n+' '+s)||'?';
+  const[bg,co]=pal(trAvIdx);av.style.background=bg;av.style.color=co;
+}
+function renderTrTypeOpts(){document.getElementById('tr-type-opts').innerHTML=[['staff','Штатный',''],['freelance','Фриланс','warn'],['extern','Внешний','']].map(([v,l,c])=>`<div class="sopt${trTypeV===v?' '+(c||'info'):''}" onclick="trTypeV='${v}';renderTrTypeOpts()">${l}</div>`).join('');}
+function renderTrStatusOpts(){document.getElementById('tr-status-opts').innerHTML=[['active','Активен','ok'],['pause','Пауза','warn'],['off','Не работает','danger']].map(([v,l,c])=>`<div class="sopt${trStatusV===v?' '+c:''}" onclick="trStatusV='${v}';renderTrStatusOpts()">${l}</div>`).join('');}
+function renderTrSpecs(){document.getElementById('tr-specs').innerHTML=SPECS.map(s=>`<div class="tag${trSpecsV.has(s)?' active':''}" onclick="trSpecsV.has('${s}')?trSpecsV.delete('${s}'):trSpecsV.add('${s}');renderTrSpecs()">${s}</div>`).join('');}
+function renderTrDays(){document.getElementById('tr-days').innerHTML=DAYS.map(d=>`<button class="daybtn${trDaysV.has(d.k)?' active':''}" onclick="trDaysV.has('${d.k}')?trDaysV.delete('${d.k}'):trDaysV.add('${d.k}');renderTrDays()">${d.l}</button>`).join('');}
+function saveTr(){
+  const name=document.getElementById('tr-name').value.trim();if(!name){document.getElementById('tr-name').focus();return;}
+  const sn=document.getElementById('tr-surname').value.trim();const full=name+(sn?' '+sn:'');
+  const pairs=Array.from(document.querySelectorAll('#tr-pairs .lpr')).map(row=>{const s=row.querySelectorAll('select');const inp=row.querySelector('input[type=number]');return{from:s[0].value,to:s[1].value,rate:parseFloat(inp?.value)||0.07,currency:s[2].value};});
+  const days=[...trDaysV].map(k=>DAYS.find(d=>d.k===k)?.l).join(',');
+  if(editTrId){
+    const t=getTr(editTrId);if(t){t.name=full;t.type=trTypeV;t.status=trStatusV;t.langs=pairs.length?pairs:t.langs;t.specs=[...trSpecsV];t.capacity=parseInt(document.getElementById('tr-cap').value)||4;t.email=document.getElementById('tr-email').value;t.phone=document.getElementById('tr-phone').value;t.days=days||t.days;t.notes=document.getElementById('tr-notes').value;}
+  } else {
+    trAvIdx++;translators.push({id:'t'+trCnt++,name:full,type:trTypeV,status:trStatusV,langs:pairs,specs:[...trSpecsV],capacity:parseInt(document.getElementById('tr-cap').value)||4,active:0,email:document.getElementById('tr-email').value,phone:document.getElementById('tr-phone').value,days:days||'Пн–Пт',notes:document.getElementById('tr-notes').value,ratings:[]});
+  }
+  const msg=document.getElementById('tr-savemsg');msg.style.display='inline';setTimeout(()=>{msg.style.display='none';closeMo('mo-tr');renderDir();},900);
+}
+
+// MANAGERS
+function setMGV(v){mgView=v;document.getElementById('mgbg').classList.toggle('active',v==='grid');document.getElementById('mgbl').classList.toggle('active',v==='table');renderManagers();}
+function renderManagers(){
+  if(mgView==='table'){
+    document.getElementById('mg-view').innerHTML=`<div class="card"><table class="ltbl"><thead><tr><th>Менеджер</th><th>Телефон</th><th>Email</th><th>Филиал</th><th>Должность</th><th></th></tr></thead><tbody>${managers.map((m,i)=>{
+      const br=getBr(m.branch);const[bg,col]=pal(i);
+      return`<tr><td><div style="display:flex;align-items:center;gap:6px"><div class="av av-s" style="background:${bg};color:${col}">${ini(m.name)}</div><span style="font-weight:500">${m.name}</span></div></td><td style="font-family:var(--m);font-size:10px">${m.phone||'—'}</td><td style="font-size:10px">${m.email||'—'}</td><td>${br?FLAGS[br.country]+' '+br.name:''}</td><td style="font-size:10px;color:var(--t2)">${m.role||''}</td><td><div style="display:flex;gap:3px"><button class="btn-sm" onclick="openMgMo('${m.id}')"><i class="ti ti-edit" style="font-size:10px"></i></button><button class="btn-sm btn-danger" onclick="confirmDel('manager','${m.id}','менеджера ${m.name}')"><i class="ti ti-trash" style="font-size:10px"></i></button></div></td></tr>`;
+    }).join('')}</tbody></table></div>`;
+  } else {
+    document.getElementById('mg-view').innerHTML=`<div class="mg-grid">${managers.map((m,i)=>{
+      const br=getBr(m.branch);const[bg,col]=pal(i);const mo=orders.filter(o=>o.managerId===m.id&&o.status!=='done').length;
+      return`<div class="mgcard">
+        <div style="display:flex;align-items:center;gap:7px;margin-bottom:8px"><div class="av av-m" style="background:${bg};color:${col}">${ini(m.name)}</div><div><div style="font-size:12px;font-weight:600">${m.name}</div><div style="font-size:9px;color:var(--t2)">${m.role||'Менеджер'}${br?' · '+br.name:''}</div></div></div>
+        <div style="font-size:10px;color:var(--t2)">${m.phone||''}</div><div style="font-size:10px;color:var(--t2)">${m.email||''}</div>
+        <div style="margin-top:6px;display:flex;justify-content:space-between;align-items:center">
+          ${mo?`<span class="badge bi">${mo} заказов</span>`:'<span class="badge bd_">нет заказов</span>'}
+          <div style="display:flex;gap:2px"><button class="btn-sm" onclick="openMgMo('${m.id}')"><i class="ti ti-edit" style="font-size:10px"></i></button><button class="btn-sm btn-danger" onclick="confirmDel('manager','${m.id}','менеджера ${m.name}')"><i class="ti ti-trash" style="font-size:10px"></i></button></div>
+        </div>
+      </div>`;
+    }).join('')}</div>`;
+  }
+}
+function openMgMo(id){
+  editMgId=id||null;
+  document.getElementById('mo-mg-ttl').textContent=id?'Редактировать менеджера':'Новый менеджер';
+  populateBrOpts('mg-branch',false);
+  if(id){
+    const m=getMg(id);if(!m)return;
+    const parts=m.name.split(' ');
+    document.getElementById('mg-name').value=parts[0]||'';document.getElementById('mg-surname').value=parts.slice(1).join(' ')||'';
+    document.getElementById('mg-phone').value=m.phone||'';document.getElementById('mg-email').value=m.email||'';document.getElementById('mg-branch').value=m.branch||'';document.getElementById('mg-role').value=m.role||'';document.getElementById('mg-notes').value=m.notes||'';
+  } else {
+    ['mg-name','mg-surname','mg-phone','mg-email','mg-role','mg-notes'].forEach(i2=>{document.getElementById(i2).value='';});
+  }
+  document.getElementById('mo-manager').style.display='block';
+}
+function saveMg(){
+  const name=document.getElementById('mg-name').value.trim();if(!name){document.getElementById('mg-name').focus();return;}
+  const sn=document.getElementById('mg-surname').value.trim();
+  const data={name:name+(sn?' '+sn:''),phone:document.getElementById('mg-phone').value,email:document.getElementById('mg-email').value,branch:document.getElementById('mg-branch').value,role:document.getElementById('mg-role').value,notes:document.getElementById('mg-notes').value};
+  if(editMgId){const i=managers.findIndex(x=>x.id===editMgId);if(i>=0)managers[i]={...managers[i],...data};}
+  else managers.push({id:'m'+mgCnt++,...data});
+  const msg=document.getElementById('mg-savemsg');msg.style.display='inline';setTimeout(()=>{msg.style.display='none';closeMo('mo-manager');renderManagers();},900);
+}
+
+// SERVICES
+function renderSvc(){
+  document.getElementById('svc-grid').innerHTML=services.map(s=>{
+    const icon=SVC_ICO[s.cat]||'ti-puzzle';const pc=s.pairs?.length||0;
+    return`<div class="svccard">
+      <button style="position:absolute;top:7px;right:28px;background:transparent;border:none;cursor:pointer;color:var(--t3);font-size:12px" onclick="openSvcMo('${s.id}')"><i class="ti ti-edit"></i></button>
+      <button style="position:absolute;top:7px;right:7px;background:transparent;border:none;cursor:pointer;color:var(--dt);font-size:12px" onclick="confirmDel('service','${s.id}','услугу ${s.name}')"><i class="ti ti-trash"></i></button>
+      <div class="svcico" style="background:var(--ibg);color:var(--it)"><i class="ti ${icon}"></i></div>
+      <div style="font-size:12px;font-weight:600;margin-bottom:2px">${s.name}</div>
+      <div style="font-size:10px;color:var(--t2);margin-bottom:4px">${s.cat}</div>
+      <div style="font-size:12px;font-weight:600;font-family:var(--m)">${csym(s.currency)}${s.price} <span style="font-size:9px;font-weight:400;color:var(--t3)">/ ${s.unit}</span></div>
+      ${pc?`<div style="margin-top:4px;display:flex;flex-wrap:wrap;gap:2px">${s.pairs.slice(0,3).map(p=>`<span class="langpill">${p[0].slice(0,3)}→${p[1].slice(0,3)}</span>`).join('')}${pc>3?`<span class="langpill">+${pc-3}</span>`:''}</div>`:''}
+    </div>`;
+  }).join('');
+}
+function openSvcMo(id){
+  editSvcId=id||null;
+  document.getElementById('mo-svc-ttl').textContent=id?'Редактировать':'Новая услуга';
+  buildAllCurSels();
+  if(id){
+    const s=getSvc(id);if(!s)return;
+    document.getElementById('sv-name').value=s.name;document.getElementById('sv-cat').value=s.cat;document.getElementById('sv-price').value=s.price;document.getElementById('sv-cur').value=s.currency;document.getElementById('sv-unit').value=s.unit;document.getElementById('sv-desc').value=s.desc||'';
+    onSvCat();document.getElementById('sv-pairs').innerHTML='';(s.pairs||[]).forEach(p=>addSvPair(p[0],p[1]));
+  } else {
+    ['sv-name','sv-price','sv-desc'].forEach(i2=>{document.getElementById(i2).value='';});document.getElementById('sv-cur').value='EUR';
+    document.getElementById('sv-pairs').innerHTML='';onSvCat();
+  }
+  document.getElementById('mo-svc').style.display='block';
+}
+function onSvCat(){document.getElementById('sv-pairs-wrap').style.display=PAIR_CATS.includes(document.getElementById('sv-cat').value)?'block':'none';}
+function addSvPair(from,to){
+  from=from||'Русский';to=to||'Английский';
+  const w=document.getElementById('sv-pairs');const d=document.createElement('div');d.style.cssText='display:flex;align-items:center;gap:4px;margin-bottom:3px';
+  d.innerHTML=`<select style="flex:1;font-size:10px;padding:2px 4px">${buildLO(from)}</select><span style="color:var(--t3);font-size:10px">→</span><select style="flex:1;font-size:10px;padding:2px 4px">${buildLO(to)}</select><button class="btn-sm" style="padding:1px 4px" onclick="this.parentElement.remove()"><i class="ti ti-x" style="font-size:9px"></i></button>`;
+  w.appendChild(d);
+}
+function saveSvc(){
+  const name=document.getElementById('sv-name').value.trim();if(!name){document.getElementById('sv-name').focus();return;}
+  const cat=document.getElementById('sv-cat').value;
+  const pairs=PAIR_CATS.includes(cat)?Array.from(document.querySelectorAll('#sv-pairs > div')).map(row=>{const s=row.querySelectorAll('select');return[s[0].value,s[1].value];}).filter(p=>p[0]&&p[1]):[];
+  const data={name,cat,price:parseFloat(document.getElementById('sv-price').value)||0,currency:document.getElementById('sv-cur').value,unit:document.getElementById('sv-unit').value,desc:document.getElementById('sv-desc').value,pairs};
+  if(editSvcId){const i=services.findIndex(x=>x.id===editSvcId);if(i>=0)services[i]={...services[i],...data};}
+  else services.push({id:'s'+sCnt++,...data});
+  closeMo('mo-svc');renderSvc();populateSvcOpts();
+}
+
+// BRANCHES
+function renderBranches(){
+  populateBrOpts('o-br-f',true);populateBrOpts('cl-br-f',true);
+  document.getElementById('br-grid').innerHTML=branches.map(b=>{
+    const bO=orders.filter(o=>o.branch===b.id&&o.status!=='done');
+    const rev=bO.reduce((s,o)=>s+o.price,0);const profit=bO.reduce((s,o)=>s+calcProfit(o).profit,0);
+    const sym=csym(b.currency);const clCnt2=clients.filter(c=>c.branch===b.id).length;
+    return`<div class="brcard">
+      <div style="position:absolute;top:9px;right:9px;display:flex;gap:3px">
+        <button class="btn-sm" onclick="event.stopPropagation();openBrMo('${b.id}')"><i class="ti ti-edit" style="font-size:9px"></i></button>
+        <button class="btn-sm" onclick="event.stopPropagation();viewBrOrders('${b.id}')"><i class="ti ti-files" style="font-size:9px"></i></button>
+      </div>
+      <div style="font-size:22px;margin-bottom:6px">${FLAGS[b.country]||'🌐'}</div>
+      <div style="font-size:13px;font-weight:600;font-family:var(--m);margin-bottom:1px">${b.name}</div>
+      <div style="font-size:9px;color:var(--t2);margin-bottom:6px;font-family:var(--m)">${b.code} · ${b.entity}</div>
+      <div style="font-size:10px;font-family:var(--m);background:var(--bg2);border-radius:var(--r);padding:5px 7px;margin-bottom:6px;line-height:1.6">${b.name} <b>${bO.length} заказов</b> | <b>${sym}${Math.round(rev).toLocaleString('ru')}</b> выручка | <b style="color:var(--ot)">${sym}${Math.round(profit).toLocaleString('ru')}</b> прибыль</div>
+      <div style="display:flex;gap:3px;flex-wrap:wrap">
+        <span class="pill" style="font-family:var(--m)">${sym} ${b.currency}</span>
+        <span class="pill">Накл. ${b.overhead}%</span>
+        ${bO.length?`<span class="badge bi" style="cursor:pointer" onclick="viewBrOrders('${b.id}')">${bO.length} актив.</span>`:''}
+        ${clCnt2?`<span class="badge bn">${clCnt2} кл.</span>`:''}
+      </div>
+    </div>`;
+  }).join('');
+}
+function openBrMo(id){
+  editBrId=id||null;document.getElementById('mo-br-ttl').textContent=id?'Редактировать филиал':'Новый филиал';
+  buildAllCurSels();
+  if(id){
+    const b=getBr(id);if(!b)return;
+    document.getElementById('br-name').value=b.name;document.getElementById('br-code').value=b.code||'';document.getElementById('br-entity').value=b.entity;document.getElementById('br-country').value=b.country;document.getElementById('br-cur').value=b.currency;document.getElementById('br-overhead').value=b.overhead;document.getElementById('br-email').value=b.email||'';document.getElementById('br-phone').value=b.phone||'';document.getElementById('br-notes').value=b.notes||'';
+  } else {
+    ['br-name','br-code','br-entity','br-email','br-phone','br-notes','br-overhead'].forEach(i2=>{document.getElementById(i2).value='';});document.getElementById('br-cur').value='EUR';
+  }
+  document.getElementById('mo-branch').style.display='block';
+}
+function saveBranch(){
+  const name=document.getElementById('br-name').value.trim();if(!name){document.getElementById('br-name').focus();return;}
+  const data={name,code:(document.getElementById('br-code').value||name.slice(0,3)).toUpperCase(),entity:document.getElementById('br-entity').value,country:document.getElementById('br-country').value,currency:document.getElementById('br-cur').value,overhead:parseFloat(document.getElementById('br-overhead').value)||20,email:document.getElementById('br-email').value,phone:document.getElementById('br-phone').value,notes:document.getElementById('br-notes').value};
+  if(editBrId){const i=branches.findIndex(x=>x.id===editBrId);if(i>=0)branches[i]={...branches[i],...data};}
+  else branches.push({id:'b'+brCnt++,...data});
+  closeMo('mo-branch');renderBranches();
+}
+
+// DELETE
+let pendDel={type:null,id:null};
+function confirmDel(type,id,label){
+  pendDel={type,id};
+  document.getElementById('conf-title').textContent='Удалить '+label+'?';
+  document.getElementById('conf-bd').style.display='flex';
+  document.getElementById('conf-ok').onclick=execDel;
+}
+function closeConf(){document.getElementById('conf-bd').style.display='none';pendDel={type:null,id:null};}
+function execDel(){
+  const{type,id}=pendDel;
+  if(type==='order')orders.splice(orders.findIndex(x=>x.id===id),1);
+  else if(type==='client')clients.splice(clients.findIndex(x=>x.id===id),1);
+  else if(type==='translator')translators.splice(translators.findIndex(x=>x.id===id),1);
+  else if(type==='manager')managers.splice(managers.findIndex(x=>x.id===id),1);
+  else if(type==='service')services.splice(services.findIndex(x=>x.id===id),1);
+  closeConf();
+  if(type==='order'){renderOrders();updBadge();if(document.getElementById('page-dashboard').classList.contains('active'))renderDashboard();}
+  else if(type==='client')renderClients();
+  else if(type==='translator'){renderDir();renderWL();}
+  else if(type==='manager')renderManagers();
+  else if(type==='service')renderSvc();
+}
+
+// INIT
+function init(){
+  buildAllCurSels();
+  populateBrOpts('o-br-f',true);populateBrOpts('cl-br-f',true);
+  populateBrOpts('no-branch',false);populateSvcOpts();populateMgOpts();
+  renderDashboard();updBadge();
+}
+init();
+</script>
+</body>
+</html>
